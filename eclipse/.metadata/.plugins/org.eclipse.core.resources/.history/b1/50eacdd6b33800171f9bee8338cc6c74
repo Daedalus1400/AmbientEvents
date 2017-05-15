@@ -1,0 +1,5 @@
+package com.daedalus.ambientevents.actions;
+
+public class CommonAction {
+
+}

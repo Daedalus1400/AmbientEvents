@@ -1,0 +1,71 @@
+package com.daedalus.ambientevents;
+
+import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.daedalus.ambientevents.proxy.ClientEventHandlerProxy;
+import com.daedalus.ambientevents.proxy.CommonEventHandlerProxy;
+import com.daedalus.ambientevents.proxy.CommonStartupProxy;
+import com.daedalus.ambientevents.proxy.ServerEventHandlerProxy;
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+
+@Mod(modid=Ref.MODID, name=Ref.NAME, version=Ref.VERSION)
+public class AmbientEvents {
+
+	@SidedProxy(clientSide = "com.daedalus.ambientevents.proxy.ClientStartupProxy", serverSide = "com.daedalus.ambientevents.proxy.ServerStartupProxy")
+	public static CommonStartupProxy startupProxy;
+	
+	public CommonEventHandlerProxy eventHandlerProxy;
+	
+	public static Logger logger;
+	
+	@Mod.Instance
+	public static AmbientEvents instance;
+	
+	@Mod.EventHandler
+	public void preInit(FMLPreInitializationEvent e) {
+		logger = e.getModLog();
+		logger.log(Level.INFO, "Logging Test");
+		startupProxy.preInit(e);
+	}
+	
+	@Mod.EventHandler
+	public void init(FMLInitializationEvent e) {
+		startupProxy.init(e);
+	}
+	
+	@Mod.EventHandler
+	public void postInit(FMLPostInitializationEvent e) {
+		startupProxy.postInit(e);
+	}
+	
+	@SubscribeEvent
+	public void onLogon(PlayerLoggedInEvent e) {
+		logger.log(Level.INFO, "Client Connected");
+		if (e.player.world.isRemote) {
+			eventHandlerProxy = new ClientEventHandlerProxy(e.player);
+		} else {
+			eventHandlerProxy = new ServerEventHandlerProxy(e.player);
+		}
+	}
+	
+	@Mod.EventHandler
+	public void onLogoff(PlayerLoggedOutEvent e) {
+		logger.log(Level.INFO, "Client Disconnected");
+	}
+	
+	@Mod.EventHandler
+	public void onWakeUp(PlayerWakeUpEvent e) {
+		eventHandlerProxy.onWakeUp(e);
+	}
+}

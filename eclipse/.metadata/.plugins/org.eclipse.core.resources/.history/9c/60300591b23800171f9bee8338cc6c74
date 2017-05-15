@@ -1,0 +1,16 @@
+package com.daedalus.ambientevents.conditions;
+
+import org.json.*;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+public class CommonCondition {
+	
+	public void init(JSONObject args) {
+		
+	}
+	
+	public boolean isMet(EntityPlayer) {
+		return false;
+	}
+}

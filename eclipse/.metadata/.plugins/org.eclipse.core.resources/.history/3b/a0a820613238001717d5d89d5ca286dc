@@ -1,0 +1,13 @@
+package com.daedalus.ambientevents.proxy;
+
+import net.minecraft.entity.player.EntityPlayer;;
+
+public class CommonEventHandlerProxy {
+
+	
+	private EntityPlayer player;
+	
+	public void Init(EntityPlayer playerIn) {
+		player = playerIn;
+	}
+}

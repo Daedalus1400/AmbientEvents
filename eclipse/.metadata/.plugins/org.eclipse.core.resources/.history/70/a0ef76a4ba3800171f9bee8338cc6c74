@@ -1,0 +1,29 @@
+package com.daedalus.ambientevents.events;
+
+import org.json.JSONObject;
+
+import com.daedalus.ambientevents.actions.MasterAction;
+import com.daedalus.ambientevents.conditions.MasterCondition;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+public class CommonEvent {
+
+	protected MasterCondition condition;
+	protected MasterAction action;
+	
+	public CommonEvent(JSONObject args) {
+		
+		condition = new MasterCondition(args.getJSONObject("conditions"));
+		action = new MasterAction(args.getJSONObject("actions"));
+		
+	}
+	
+	public CommonEvent() {}
+	
+	public void process(EntityPlayer player) {
+		if (condition.isMet(player)) {
+			action.execute(player);
+		}
+	}
+}

@@ -1,0 +1,10 @@
+package com.daedalus.ambientevents.conditions;
+
+public class CommonCondition {
+
+	public void init() {}
+	
+	public boolean isMet() {
+		return false;
+	}
+}

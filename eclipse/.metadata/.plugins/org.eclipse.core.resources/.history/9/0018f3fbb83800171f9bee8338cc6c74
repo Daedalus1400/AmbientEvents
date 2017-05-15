@@ -1,0 +1,15 @@
+package com.daedalus.ambientevents.events;
+
+import org.json.JSONObject;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+public class CommonEvent {
+
+	public CommonEvent(JSONObject args) {}
+	public CommonEvent() {}
+	
+	public void process(EntityPlayer player) {
+		
+	}
+}

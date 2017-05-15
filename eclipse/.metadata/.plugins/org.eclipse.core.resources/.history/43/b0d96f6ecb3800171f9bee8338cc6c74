@@ -1,0 +1,22 @@
+# Configuration file
+
+##########################################################################################################
+# events
+#--------------------------------------------------------------------------------------------------------#
+# Events Configuration
+##########################################################################################################
+
+events {
+    # Enter list of conditions and events. Must be valid JSON or "". [default: ]
+    S:Events={	"eventname": { 
+    				"conditions": [
+    					{"type": "playerpos", "dimension": "y" "comparison": ">", "value": 100}
+    				],
+    				"actions": [
+    					{"type": "lightning", "target": "player", "chance": 20}
+    				]
+    			}
+    		}
+}
+
+

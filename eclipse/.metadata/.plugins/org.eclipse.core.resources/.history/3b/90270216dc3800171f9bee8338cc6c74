@@ -1,0 +1,32 @@
+package com.daedalus.ambientevents.actions;
+
+import org.json.JSONObject;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+public class LightningAction extends CommonAction {
+
+	protected int chance;
+	protected enum Target {player, nearPlayer};
+	protected Target target;
+	
+	public LightningAction (JSONObject args) throws Exception {
+		
+		String targ = args.getString("target");
+		
+		switch (targ) {
+		
+		case "player":	target = Target.player;
+		break;
+		case "nearPlayer":	target = Target.nearPlayer;
+		break;
+		
+		default: 		throw new Exception("Unrecognized target: " + targ);
+		}
+	}
+	
+	@Override
+	public void execute(EntityPlayer player) {
+		
+	}
+}

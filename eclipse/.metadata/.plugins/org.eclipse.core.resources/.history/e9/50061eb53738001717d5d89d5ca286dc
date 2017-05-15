@@ -1,0 +1,21 @@
+package com.daedalus.ambientevents.proxy;
+
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.fml.common.Mod;
+
+public class CommonEventHandlerProxy {
+
+	protected EntityPlayer player;
+	
+	public CommonEventHandlerProxy(EntityPlayer playerIn) {
+		player = playerIn;
+	}
+	
+	@Mod.EventHandler
+	public void onWakeUp(PlayerWakeUpEvent e) {
+		EntityPlayer localPlayer = e.getEntityPlayer();
+		localPlayer.world.addWeatherEffect(new EntityLightningBolt(localPlayer.world, localPlayer.posX, localPlayer.posY, localPlayer.posZ, true));
+	}
+}

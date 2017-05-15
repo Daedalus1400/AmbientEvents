@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+<typeInfo handle="=MDKExample/\/usr\/lib\/jvm\/java-8-oracle\/jre\/lib\/rt.jar&lt;java.beans(EventHandler.class[EventHandler" modifiers="33" timestamp="1493082368000"/>
+<typeInfo handle="=MDKExample/\/usr\/lib\/jvm\/java-8-oracle\/jre\/lib\/rt.jar&lt;java.lang(Exception.class[Exception" modifiers="33" timestamp="1493082368000"/>
+<typeInfo handle="=MDKExample/src\/main\/java&lt;com.daedalus.ambientevents.conditions{CommonCondition.java[CommonCondition" modifiers="1" timestamp="1494791218000"/>
+<typeInfo handle="=MDKExample/src\/main\/java&lt;com.daedalus.ambientevents.comparisons{CommonComparison.java[CommonComparison" modifiers="1" timestamp="1494789681000"/>
+<typeInfo handle="=MDKExample/src\/main\/java&lt;com.daedalus.ambientevents.actions{CommonAction.java[CommonAction" modifiers="1" timestamp="1494791492000"/>
+</typeInfoHistroy>

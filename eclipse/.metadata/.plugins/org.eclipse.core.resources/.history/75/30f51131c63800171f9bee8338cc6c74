@@ -1,0 +1,12 @@
+package com.daedalus.ambientevents.actions;
+
+import org.json.JSONObject;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+public class CommonAction {
+
+	public CommonAction(JSONObject args) {}
+	public CommonAction() {}
+	public void execute(EntityPlayer player) {}
+}

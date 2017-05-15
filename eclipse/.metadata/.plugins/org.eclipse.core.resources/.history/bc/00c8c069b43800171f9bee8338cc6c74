@@ -1,0 +1,28 @@
+package com.daedalus.ambientevents.conditions;
+
+import java.util.ArrayList;
+
+import org.json.JSONObject;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+public class MasterCondition extends CommonCondition {
+	
+	ArrayList<CommonCondition> conditions;
+
+	@Override
+	public void init(JSONObject args) {
+		
+	}
+	
+	@Override
+	public boolean isMet(EntityPlayer player) {
+		int i = 0;
+		while (conditions[i].isMet(player)) {
+			i++;
+		}
+		
+		
+		return true;
+	}
+}

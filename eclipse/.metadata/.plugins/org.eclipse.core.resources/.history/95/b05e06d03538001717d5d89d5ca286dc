@@ -1,0 +1,5 @@
+package com.daedalus.ambientevents.proxy;
+
+public class ClientEventHandlerProxy extends CommonEventHandlerProxy {
+
+}

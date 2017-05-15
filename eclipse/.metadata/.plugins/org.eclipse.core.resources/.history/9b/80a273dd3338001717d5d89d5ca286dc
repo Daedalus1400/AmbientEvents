@@ -1,0 +1,20 @@
+package com.daedalus.ambientevents.proxy;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.fml.common.Mod;
+
+public class CommonEventHandlerProxy {
+
+	private EntityPlayer player;
+	
+	public void Init(EntityPlayer playerIn) {
+		player = playerIn;
+		
+	}
+	
+	@Mod.EventHandler
+	public void onWakeUp(PlayerWakeUpEvent e) {
+		
+	}
+}

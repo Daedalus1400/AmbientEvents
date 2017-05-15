@@ -1,0 +1,21 @@
+package com.daedalus.ambientevents.actions;
+
+import org.json.JSONObject;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+public class LightningAction extends CommonAction {
+
+	protected int chance;
+	protected enum target {player, nearPlayer};
+	protected target activeTarget;
+	
+	public LightningAction (JSONObject args) {
+		
+	}
+	
+	@Override
+	public void execute(EntityPlayer player) {
+		
+	}
+}

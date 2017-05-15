@@ -1,0 +1,18 @@
+package com.daedalus.ambientevents.actions;
+
+import org.json.JSONObject;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+public class MasterAction extends CommonAction {
+
+	@Override
+	public void init(JSONObject args) {
+		
+	}
+	
+	@Override
+	public void execute(EntityPlayer player) {
+		
+	}
+}

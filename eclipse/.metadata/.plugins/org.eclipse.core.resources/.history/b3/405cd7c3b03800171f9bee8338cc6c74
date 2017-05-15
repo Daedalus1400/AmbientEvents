@@ -1,0 +1,12 @@
+package com.daedalus.ambientevents.conditions;
+
+import org.json.*;
+
+public class CommonCondition {
+
+	public void init(JSONObject args) {}
+	
+	public boolean isMet() {
+		return false;
+	}
+}

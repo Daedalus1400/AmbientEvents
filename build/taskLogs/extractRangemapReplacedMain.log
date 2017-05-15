@@ -1,0 +1,118 @@
+Symbol range map extraction starting
+Processing 37 files
+startProcessing "com/daedalus/ambientevents/AmbientEvents.java" md5: dce03f070e1a2251ef61012ab78aa2f0
+endProcessing "com/daedalus/ambientevents/AmbientEvents.java"
+
+startProcessing "com/daedalus/ambientevents/Config.java" md5: cc0b185a1d745f4d42ffe04700f4747f
+endProcessing "com/daedalus/ambientevents/Config.java"
+
+startProcessing "com/daedalus/ambientevents/EventHandler.java" md5: 1df6dda40f9d109c27d80cfaab949b01
+endProcessing "com/daedalus/ambientevents/EventHandler.java"
+
+startProcessing "com/daedalus/ambientevents/GenericEvent.java" md5: c0028c816287c8a508f6d03ab3804b9d
+endProcessing "com/daedalus/ambientevents/GenericEvent.java"
+
+startProcessing "com/daedalus/ambientevents/Ref.java" md5: dfdb32c582df453f4c6c1634c9bbf105
+endProcessing "com/daedalus/ambientevents/Ref.java"
+
+startProcessing "com/daedalus/ambientevents/actions/CommonAction.java" md5: 388575777b4fc5c4dc084d751dbe4709
+    Compile Error! Pb(881) Cannot switch on a value of type String for source level below 1.7. Only convertible int values or enum variables are permitted
+endProcessing "com/daedalus/ambientevents/actions/CommonAction.java"
+
+startProcessing "com/daedalus/ambientevents/actions/IAction.java" md5: a97dbc745ac30091f228c91e2cf8597c
+endProcessing "com/daedalus/ambientevents/actions/IAction.java"
+
+startProcessing "com/daedalus/ambientevents/actions/LightningAction.java" md5: 047a3dd7eae81f6cb50cfe7b8a946a61
+    Compile Error! Pb(881) Cannot switch on a value of type String for source level below 1.7. Only convertible int values or enum variables are permitted
+endProcessing "com/daedalus/ambientevents/actions/LightningAction.java"
+
+startProcessing "com/daedalus/ambientevents/actions/MasterAction.java" md5: 93d76c279aae7059f297924503fedfef
+endProcessing "com/daedalus/ambientevents/actions/MasterAction.java"
+
+startProcessing "com/daedalus/ambientevents/comparisons/CommonComparison.java" md5: 9bbac1421a565e506898be7f24cbd0ff
+    Compile Error! Pb(881) Cannot switch on a value of type String for source level below 1.7. Only convertible int values or enum variables are permitted
+endProcessing "com/daedalus/ambientevents/comparisons/CommonComparison.java"
+
+startProcessing "com/daedalus/ambientevents/comparisons/GreaterThanComparison.java" md5: 4ab73d686b3a6469e12d507bf7d6a943
+endProcessing "com/daedalus/ambientevents/comparisons/GreaterThanComparison.java"
+
+startProcessing "com/daedalus/ambientevents/comparisons/LessThanComparison.java" md5: 5de35a28fc9a0dc3b67a01e0ac0b08f6
+endProcessing "com/daedalus/ambientevents/comparisons/LessThanComparison.java"
+
+startProcessing "com/daedalus/ambientevents/conditions/CommonCondition.java" md5: 5fbdf7a635d1bda2c40be50b174ae23d
+    Compile Error! Pb(881) Cannot switch on a value of type String for source level below 1.7. Only convertible int values or enum variables are permitted
+endProcessing "com/daedalus/ambientevents/conditions/CommonCondition.java"
+
+startProcessing "com/daedalus/ambientevents/conditions/ICondition.java" md5: cd4003d75a9f876d12dbf21e3a43e8c4
+endProcessing "com/daedalus/ambientevents/conditions/ICondition.java"
+
+startProcessing "com/daedalus/ambientevents/conditions/MasterCondition.java" md5: be1e200734953f6b06bd6f47ddc23532
+endProcessing "com/daedalus/ambientevents/conditions/MasterCondition.java"
+
+startProcessing "com/daedalus/ambientevents/conditions/PlayerPosCondition.java" md5: 1626dad7c42c46ea711a0696df7e23b4
+    Compile Error! Pb(881) Cannot switch on a value of type String for source level below 1.7. Only convertible int values or enum variables are permitted
+endProcessing "com/daedalus/ambientevents/conditions/PlayerPosCondition.java"
+
+startProcessing "com/daedalus/ambientevents/proxy/ClientStartupProxy.java" md5: e25e019abda75c52efb3ced4de7a3cb1
+endProcessing "com/daedalus/ambientevents/proxy/ClientStartupProxy.java"
+
+startProcessing "com/daedalus/ambientevents/proxy/CommonStartupProxy.java" md5: 0750f5f52d37d05dc8e477f6833b4ca0
+endProcessing "com/daedalus/ambientevents/proxy/CommonStartupProxy.java"
+
+startProcessing "com/daedalus/ambientevents/proxy/ServerStartupProxy.java" md5: 3979770b7011158dd562803ef8a1122d
+endProcessing "com/daedalus/ambientevents/proxy/ServerStartupProxy.java"
+
+startProcessing "org/json/CDL.java" md5: 5acf78f1390b6bf3fbd68e733f714411
+endProcessing "org/json/CDL.java"
+
+startProcessing "org/json/Cookie.java" md5: 446aecb620bc24ddb18f356acefa0364
+endProcessing "org/json/Cookie.java"
+
+startProcessing "org/json/CookieList.java" md5: 326a7d58aad18e6578b28249e5f51abc
+endProcessing "org/json/CookieList.java"
+
+startProcessing "org/json/HTTP.java" md5: 86fce1a47865d901a26fba1948c9e2cc
+endProcessing "org/json/HTTP.java"
+
+startProcessing "org/json/HTTPTokener.java" md5: 7d262e906bfa5085e8ee3e676cc9ffba
+endProcessing "org/json/HTTPTokener.java"
+
+startProcessing "org/json/JSONArray.java" md5: 5de6606b256095feba0bc008647a85b1
+endProcessing "org/json/JSONArray.java"
+
+startProcessing "org/json/JSONException.java" md5: 46fc11dbe6fd9d23a6e28d122a1a2057
+endProcessing "org/json/JSONException.java"
+
+startProcessing "org/json/JSONML.java" md5: 49da1cefd413af3c3c8d802ff9f3e1e9
+endProcessing "org/json/JSONML.java"
+
+startProcessing "org/json/JSONObject.java" md5: b1271ac0444e3d953321f262206a3e8c
+endProcessing "org/json/JSONObject.java"
+
+startProcessing "org/json/JSONPointer.java" md5: 394b86321f3a9ab9cf2a91bad322e77b
+endProcessing "org/json/JSONPointer.java"
+
+startProcessing "org/json/JSONPointerException.java" md5: 9ee804aeb016840cc83fbe0796ec6805
+endProcessing "org/json/JSONPointerException.java"
+
+startProcessing "org/json/JSONString.java" md5: ac2b39edeb4f7ff112be0c79597eca4b
+endProcessing "org/json/JSONString.java"
+
+startProcessing "org/json/JSONStringer.java" md5: 3cf031b86b2796d911f7eb09e6689a90
+endProcessing "org/json/JSONStringer.java"
+
+startProcessing "org/json/JSONTokener.java" md5: 64d73dcc9875d6a55ff6ed9753f530ae
+endProcessing "org/json/JSONTokener.java"
+
+startProcessing "org/json/JSONWriter.java" md5: 83f740f0146014f5a42ff9f216d50e53
+endProcessing "org/json/JSONWriter.java"
+
+startProcessing "org/json/Property.java" md5: 5644d116b6b9a5ff6160c895692cc2e4
+endProcessing "org/json/Property.java"
+
+startProcessing "org/json/XML.java" md5: 874bdc2de82454e3353c6dd543f65217
+endProcessing "org/json/XML.java"
+
+startProcessing "org/json/XMLTokener.java" md5: 0005f394670caec089b2d17358779bcc
+endProcessing "org/json/XMLTokener.java"
+

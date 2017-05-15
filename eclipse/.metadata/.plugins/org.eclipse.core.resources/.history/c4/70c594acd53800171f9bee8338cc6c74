@@ -1,0 +1,15 @@
+package com.daedalus.ambientevents.conditions;
+
+import org.json.JSONObject;
+
+public class PlayerPosCondition extends CommonCondition {
+
+	public PlayerPosCondition(JSONObject args) {
+		
+	}
+	
+	@Override
+	public boolean isMet(EntityPlayer player) {
+		
+	}
+}

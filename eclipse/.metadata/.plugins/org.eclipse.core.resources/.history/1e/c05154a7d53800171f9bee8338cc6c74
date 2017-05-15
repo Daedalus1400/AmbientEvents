@@ -1,0 +1,10 @@
+package com.daedalus.ambientevents.conditions;
+
+import org.json.JSONObject;
+
+public class PlayerPosCondition extends CommonCondition {
+
+	public PlayerPosCondition(JSONObject args) {
+		
+	}
+}

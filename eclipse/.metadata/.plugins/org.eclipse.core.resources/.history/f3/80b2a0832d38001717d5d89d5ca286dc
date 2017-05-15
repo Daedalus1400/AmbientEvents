@@ -1,0 +1,28 @@
+package com.daedalus.ambientevents;
+
+import com.daedalus.ambientevents.proxy.CommonProxy;
+
+import net.minecraftforge.common.config.Configuration;
+
+public class Config {
+	
+	
+	
+	
+	public static void readConfig() {
+		
+		Configuration cfg = CommonProxy.config;
+		
+		try {
+			cfg.load();
+		} catch (Exception e1) {
+			
+		} finally {
+			if (cfg.hasChanged()) {
+				cfg.save();
+			}
+		}
+	}
+	
+	
+}

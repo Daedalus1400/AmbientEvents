@@ -1,0 +1,12 @@
+package com.daedalus.ambientevents.exceptions;
+
+public class UnknownTypeException extends Exception {
+
+	public UnknownTypeException(String msg) {
+		super(msg);
+	}
+	
+	public UnknownTypeException(Exception e) {
+		super(e);
+	}
+}

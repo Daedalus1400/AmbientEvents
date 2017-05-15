@@ -1,0 +1,32 @@
+package com.daedalus.ambientevents.events;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.json.JSONObject;
+
+import com.daedalus.ambientevents.conditions.MasterCondition;
+import com.daedalus.ambientevents.actions.MasterAction;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+public class MasterEvent extends CommonEvent {
+	
+	protected MasterCondition condition;
+	protected MasterAction action;
+	
+	public MasterEvent(JSONObject args) {
+		
+		
+		Iterator<String> eventIt = eventsJSON.keys();
+		
+		while (eventIt.hasNext()) {
+			events.add(new MasterEvent(eventsJSON.getJSONObject(eventIt.next())));
+		}
+	}
+	
+	@Override
+	public void process(EntityPlayer player) {
+		
+	}
+}

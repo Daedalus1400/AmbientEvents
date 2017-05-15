@@ -1,0 +1,20 @@
+package com.daedalus.ambientevents.conditions;
+
+import org.json.JSONObject;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+public class MasterCondition extends CommonCondition {
+
+	@Override
+	public void init(JSONObject args, EntityPlayer playerIn) {
+		super.init(args, playerIn);
+		
+	}
+	
+	@Override
+	public boolean isMet() {
+		
+		return false;
+	}
+}

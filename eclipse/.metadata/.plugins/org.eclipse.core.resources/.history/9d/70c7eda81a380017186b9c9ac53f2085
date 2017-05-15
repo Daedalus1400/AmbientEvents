@@ -1,0 +1,16 @@
+[
+{
+  "modid": "ambientevents",
+  "name": "Ambient Events",
+  "description": "A mod to give pack makers access to events triggered by player conditions (such as location, hunger, time since last sleep) and time of day.",
+  "version": "",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Daedalus1400"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

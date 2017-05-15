@@ -1,0 +1,30 @@
+package com.daedalus.ambientevents.conditions;
+
+import org.json.*;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+public class CommonCondition throws Exception {
+	
+	public static CommonCondition newCondition(JSONObject args) {
+		// Factory method for creating new conditions from JSON based config
+		CommonCondition output = null;
+		
+		String type = args.getString("type");
+		if (type == "playerpos") {
+			
+		} else if (type == "timeofday") {
+		
+		} else {
+			throw new Exception();
+		}
+		
+		return output;
+	}
+	
+	public CommonCondition(JSONObject args) {}
+	public CommonCondition() {}
+	public boolean isMet(EntityPlayer player) {
+		return false;
+	}
+}
