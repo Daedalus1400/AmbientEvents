@@ -1,5 +1,0 @@
-package com.daedalus.ambientevents.exceptions;
-
-public class UnknownTypeException extends Exception {
-
-}

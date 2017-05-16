@@ -12,13 +12,30 @@ import org.json.JSONArray;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class MasterAction implements IAction {
+	
+	public static IAction newAction(JSONObject args) throws Exception {
+		// Factory method for creating new actions from JSON based config
+		IAction output = null;
+		
+		String type = args.getString("type");
+		
+		switch (type) {
+		
+		case "lightning":	output = new LightningAction(args);
+		break;
+		
+		default:			throw new Exception("Unrecogized action type: " + type);
+		}
+		
+		return output;
+	}
 
 	ArrayList<IAction> actions;
 	
 	public MasterAction(JSONArray args) throws Exception {
 		actions = new ArrayList<IAction>();
 		for (int i = 0; i < args.length(); i++) {
-			actions.add(CommonAction.newAction(args.getJSONObject(i)));
+			actions.add(newAction(args.getJSONObject(i)));
 		}
 	}
 	

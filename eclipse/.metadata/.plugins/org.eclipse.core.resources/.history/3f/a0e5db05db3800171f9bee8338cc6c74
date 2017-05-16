@@ -1,5 +1,0 @@
-package com.daedalus.ambientevents.actions;
-
-public class LightningAction extends CommonAction {
-
-}

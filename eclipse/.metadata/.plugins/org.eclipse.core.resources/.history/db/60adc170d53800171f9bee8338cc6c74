@@ -1,5 +1,0 @@
-package com.daedalus.ambientevents.conditions;
-
-public class PlayerPosCondition extends CommonCondition {
-
-}

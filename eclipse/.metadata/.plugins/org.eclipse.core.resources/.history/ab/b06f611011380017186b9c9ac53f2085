@@ -1,7 +1,0 @@
-package com.Daedalus.AmbientEvents;
-
-public class Ref {
-	public static final String MODID = "AmbientEvents";
-	public static final String NAME = "Ambient Events";
-	public static final String Version = "0.0.1";
-}

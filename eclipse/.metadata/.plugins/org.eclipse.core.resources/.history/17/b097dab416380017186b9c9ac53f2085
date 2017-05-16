@@ -1,8 +1,0 @@
-package com.daedalus.ambientevents.proxy;
-
-public class Config {
-	
-	public static void readConfig() {
-		
-	}
-}

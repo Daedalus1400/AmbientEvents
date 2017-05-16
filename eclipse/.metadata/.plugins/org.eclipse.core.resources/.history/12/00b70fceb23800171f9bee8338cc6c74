@@ -1,5 +1,0 @@
-package com.daedalus.ambientevents.events;
-
-public class CommonEvent {
-
-}

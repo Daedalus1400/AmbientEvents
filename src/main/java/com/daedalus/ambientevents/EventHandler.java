@@ -30,7 +30,7 @@ public class EventHandler {
 	public EntityPlayer player;
 
 	protected int tick = 0;
-	protected Random random = new Random();
+	public static Random random = new Random();
 	protected boolean active = false;
 	protected boolean configGood = false;
 	
@@ -49,7 +49,7 @@ public class EventHandler {
 		try {
 			eventsJSON = new JSONObject(Config.eventsRaw);
 		} catch (Exception e) {
-			AmbientEvents.logger.log(Level.ERROR, Config.eventsRaw);
+			AmbientEvents.logger.log(Level.ERROR, "Error parsing config: Invalid JSON");
 			return;
 		}
 		

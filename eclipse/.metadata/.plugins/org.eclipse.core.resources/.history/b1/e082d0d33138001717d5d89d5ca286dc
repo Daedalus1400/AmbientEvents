@@ -1,9 +1,0 @@
-package com.daedalus.ambientevents.proxy;
-
-import net.minecraft.entity.Player;
-
-public class CommonEventHandlerProxy {
-
-	
-	private EntityPlayer player;
-}
