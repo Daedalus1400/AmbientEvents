@@ -2,6 +2,7 @@ package com.daedalus.ambientevents.conditions;
 
 import org.json.JSONObject;
 
+import com.daedalus.ambientevents.EventHandler;
 import com.daedalus.ambientevents.wrappers.INumber;
 import com.daedalus.ambientevents.wrappers.Wrapper;
 
@@ -21,7 +22,7 @@ public class ChanceCondition implements ICondition {
 	
 	@Override
 	public boolean isMet(EntityPlayer player) {
-		if (chance.getValue() < 1) {
+		if (EventHandler.random.nextDouble() * chance.getValue() < 1) {
 			return true;
 		}
 		return false;
