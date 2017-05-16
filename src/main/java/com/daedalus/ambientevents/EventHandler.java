@@ -15,6 +15,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Type;
+import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -37,7 +41,7 @@ public class EventHandler {
 	protected ArrayList<GenericEvent> events;
 	
 	// Tracking Variables
-	public long lastSleep = 0;
+	public static long lastSleep = 0;
 	
 	public void init() {
 		if (Config.eventsRaw == "null") {
@@ -56,10 +60,9 @@ public class EventHandler {
 		events = new ArrayList<GenericEvent>();
 		
 		Iterator<String> eventIt = eventsJSON.keys();
-		String eventName;
 		
 		while (eventIt.hasNext()) {
-			eventName = eventIt.next();
+			String eventName = eventIt.next();
 			try {
 				events.add(new GenericEvent(eventsJSON.getJSONObject(eventName)));
 			} catch (Exception e) {
@@ -82,7 +85,9 @@ public class EventHandler {
 		player = e.player;
 		
 		// TODO Change this to get data from world save
-		lastSleep = player.world.getTotalWorldTime();
+		if (lastSleep == 0) {
+			lastSleep = player.world.getTotalWorldTime();
+		}
 		
 		if (configGood) {
 			active = true;
@@ -96,10 +101,12 @@ public class EventHandler {
 	
 	@SubscribeEvent
 	public void onTick(ClientTickEvent e) {
-		if (active) {
+		if (e.phase == Phase.START && active) {
+			
 			for (int i = tick; i < events.size(); i+=20) {
 				events.get(i).process(player);
 			}
+			
 			tick++;
 			if (tick == 20) {
 				tick = 0;

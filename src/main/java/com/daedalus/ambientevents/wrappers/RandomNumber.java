@@ -8,7 +8,6 @@ public class RandomNumber implements INumber {
 	
 	private double upperBound = 0;
 	private double lowerBound = 0;
-	private double range;
 	
 	public RandomNumber(JSONObject args) throws Exception {
 		if (args.has("upperbound")) {
@@ -22,13 +21,16 @@ public class RandomNumber implements INumber {
 		if (upperBound == lowerBound) {
 			throw new Exception("Invalid bounds for random number");
 		}
-		
-		range = upperBound - lowerBound;
+	}
+	
+	public RandomNumber(double lowerIn, double upperIn) {
+		lowerBound = lowerIn;
+		upperBound = upperIn;
 	}
 	
 	public double getValue() {
 		
-		return EventHandler.random.nextDouble()*range+lowerBound;
+		return EventHandler.random.nextDouble()*(upperBound - lowerBound)+lowerBound;
 	}
 
 }

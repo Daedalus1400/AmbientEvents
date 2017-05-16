@@ -13,9 +13,8 @@ import com.daedalus.ambientevents.wrappers.Wrapper;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class LightningAction implements IAction {
+public class LightningAction extends CommonAction {
 
-	protected INumber chance;
 	protected IString target;
 	protected INumber radius;
 	
@@ -24,6 +23,8 @@ public class LightningAction implements IAction {
 	protected double z;
 	
 	public LightningAction (JSONObject args) throws Exception {
+		super(args);
+		
 		if (args.has("target")) {
 			target = Wrapper.newString(args.get("target"));
 			
@@ -35,13 +36,7 @@ public class LightningAction implements IAction {
 			default: 		throw new Exception("Unrecognized target: " + target.getValue());
 			}
 		} else {
-			throw new Exception("No target specified");
-		}
-		
-		if (args.has("chance")) {
-			chance = Wrapper.newNumber(args.get("chance"));
-		} else {
-			chance = Wrapper.newNumber(1);
+			target = Wrapper.newString("player");
 		}
 		
 		if (args.has("radius")) {
@@ -53,7 +48,7 @@ public class LightningAction implements IAction {
 	
 	@Override
 	public void execute(EntityPlayer player) {
-		if (EventHandler.random.nextInt((int)chance.getValue()) == 0) {
+		if (chance.getValue() < 1) {
 
 			switch (target.getValue()) {
 			case "player":

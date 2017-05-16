@@ -16,19 +16,22 @@ public class MasterCondition implements ICondition {
 	
 	public static ICondition newCondition(JSONObject args) throws Exception {
 		// Factory method for creating new conditions from JSON based config
-		ICondition output = null;
 		
-		String type = args.getString("type");
-		
-		switch (type) {
-		
-		case "playerpos":	output = new PlayerPosCondition(args);
-		break;
-		
-		default:			throw new Exception("Unrecogized condition type: " + type);
+		if (args.has("type")) {
+			switch (args.getString("type")) {
+			
+			case "playerpos":	return new PlayerPosCondition(args);
+			case "alwaystrue":	return new AlwaysTrueCondition();
+			case "chance":		return new ChanceCondition(args);
+			case "timeofday":	return new TimeOfDayCondition(args);
+			case "worldtime":	return new WorldTimeCondition(args);
+			case "timesincesleep": return new TimeSinceSleepCondition(args);
+			
+			default:			throw new Exception("Unrecogized condition type: " + args.getString("type"));
+			}
+		} else {
+			throw new Exception("No type specified");
 		}
-		
-		return output;
 	}
 
 	public MasterCondition(JSONArray args) throws Exception {

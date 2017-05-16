@@ -8,15 +8,15 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import com.daedalus.ambientevents.AmbientEvents;
 import com.daedalus.ambientevents.comparisons.*;
+import com.daedalus.ambientevents.wrappers.INumber;
 import com.daedalus.ambientevents.wrappers.IString;
 import com.daedalus.ambientevents.wrappers.Wrapper;
 
 public class PlayerPosCondition implements ICondition {
 
-	protected enum Dimension {x, y, z};
 	protected IString dimension;
 	protected NumericComparison comparison;
-	protected double compareValue;
+	protected INumber compareValue;
 	
 	public PlayerPosCondition(JSONObject args) throws Exception {
 		
@@ -32,9 +32,9 @@ public class PlayerPosCondition implements ICondition {
 			throw new Exception("No comparison specified");
 		}
 		
-		try {
-			compareValue = args.getDouble("value");
-		} catch (JSONException e) {
+		if (args.has("value")){
+			compareValue = Wrapper.newNumber(args.get("value"));
+		} else {
 			throw new Exception("No value specified");
 		}
 	}
@@ -53,6 +53,6 @@ public class PlayerPosCondition implements ICondition {
 			default:return false;
 		}
 		
-		return comparison.compare(playerValue, compareValue);
+		return comparison.compare(playerValue, compareValue.getValue());
 	}
 }

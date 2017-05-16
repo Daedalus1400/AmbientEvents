@@ -15,19 +15,19 @@ public class MasterAction implements IAction {
 	
 	public static IAction newAction(JSONObject args) throws Exception {
 		// Factory method for creating new actions from JSON based config
-		IAction output = null;
 		
-		String type = args.getString("type");
-		
-		switch (type) {
-		
-		case "lightning":	output = new LightningAction(args);
-		break;
-		
-		default:			throw new Exception("Unrecogized action type: " + type);
+		if (args.has("type")) {
+			switch (args.getString("type")) {
+			
+			case "lightning":	return new LightningAction(args);
+			case "chat":		return new ChatAction(args);
+			
+			default:			throw new Exception("Unrecogized action type: " + args.getString("type"));
+			}
+		} else {
+			throw new Exception("No type specified");
 		}
 		
-		return output;
 	}
 
 	ArrayList<IAction> actions;
