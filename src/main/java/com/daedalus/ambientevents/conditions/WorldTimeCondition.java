@@ -29,7 +29,7 @@ public class WorldTimeCondition implements ICondition {
 	
 	@Override
 	public boolean isMet(EntityPlayer player) {
-		if (comparison.compare(player.world.getTotalWorldTime() / 24000, checkValue.getValue())) {
+		if (comparison.compare(player.world.getTotalWorldTime(), checkValue.getValue() * 24000)) {
 			return true;
 		}
 		return false;
