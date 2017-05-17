@@ -21,6 +21,8 @@ public class MasterAction implements IAction {
 			
 			case "lightning":	return new LightningAction(args);
 			case "chat":		return new ChatAction(args);
+			case "potioneffect":return new PotionEffectAction(args);
+			case "playsound":	return new PlaySoundAction(args);
 			
 			default:			throw new Exception("Unrecogized action type: " + args.getString("type"));
 			}

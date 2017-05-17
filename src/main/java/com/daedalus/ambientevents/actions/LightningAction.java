@@ -27,14 +27,6 @@ public class LightningAction extends CommonAction {
 		
 		if (args.has("target")) {
 			target = Wrapper.newString(args.get("target"));
-			
-			switch (target.getValue()) {
-			
-			case "player":		break;
-			case "nearplayer":	break;
-			
-			default: 		throw new Exception("Unrecognized target: " + target.getValue());
-			}
 		} else {
 			target = Wrapper.newString("player");
 		}
