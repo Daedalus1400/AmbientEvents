@@ -26,6 +26,7 @@ public class MasterCondition implements ICondition {
 			case "timeofday":	return new TimeOfDayCondition(args);
 			case "worldtime":	return new WorldTimeCondition(args);
 			case "timesincesleep": return new TimeSinceSleepCondition(args);
+			case "once":		return new OnceCondition();
 			
 			default:			throw new Exception("Unrecogized condition type: " + args.getString("type"));
 			}

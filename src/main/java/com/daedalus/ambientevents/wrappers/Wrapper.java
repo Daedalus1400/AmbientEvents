@@ -42,8 +42,20 @@ public class Wrapper {
 		
 		if (args instanceof String) {
 			return new RawString((String)args);
+		} else if (args instanceof JSONObject) {
+			
+			if (((JSONObject) args).has("type")) {
+				
+				switch(((JSONObject) args).getString("type")) {
+				
+				case "randompick":	return new RandomPickString((JSONObject)args);
+				case "sequentialpick":	return new SequentialPickString((JSONObject)args);
+				
+				default:	throw new Exception("String type not recognized");
+				}
+			}
 		}
 		
-		throw new Exception("Numeric value not recognized");
+		throw new Exception("String value not recognized");
 	}
 }

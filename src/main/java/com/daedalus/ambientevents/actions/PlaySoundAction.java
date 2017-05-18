@@ -28,7 +28,7 @@ public class PlaySoundAction extends CommonAction {
 	
 	public static HashMap<String, SoundEvent> registry = null;
 	
-	public void InitRegistry() {
+	public static void InitRegistry() {
 		Iterator<SoundEvent> soundsIT = SoundEvent.REGISTRY.iterator();
 		registry = new HashMap<String, SoundEvent>();
 		
