@@ -9,19 +9,14 @@ import java.util.Iterator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Type;
-import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
+
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
