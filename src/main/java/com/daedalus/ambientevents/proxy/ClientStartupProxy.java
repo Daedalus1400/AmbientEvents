@@ -3,6 +3,7 @@ package com.daedalus.ambientevents.proxy;
 import java.io.File;
 
 import com.daedalus.ambientevents.AmbientEvents;
+import com.daedalus.ambientevents.ModItems;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -17,6 +18,7 @@ public class ClientStartupProxy extends CommonStartupProxy {
 		super.preInit(e);
 		MinecraftForge.EVENT_BUS.register(AmbientEvents.clientEventHandler);
 		AmbientEvents.clientEventHandler.configPath = e.getModConfigurationDirectory();
+		ModItems.initModels();
 	}
 	
 	@Override

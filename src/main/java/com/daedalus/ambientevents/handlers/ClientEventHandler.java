@@ -30,8 +30,11 @@ public class ClientEventHandler extends CommonEventHandler {
 	
 	// Client side event handler
 	
-	public EntityPlayer player;
-	public File configPath;
+	public static EntityPlayer player;
+	public static File configPath;
+	public static File JSONPath;
+	public static File JSONFile;
+	public static JSONObject eventsJSON;
 
 	protected int tick = 0;
 	public static Random random = new Random();
@@ -46,8 +49,8 @@ public class ClientEventHandler extends CommonEventHandler {
 	@Override
 	public void init() {
 
-		File JSONPath = new File(configPath.getPath() + "/AmbientEvents");
-		File JSONFile = new File(JSONPath.getPath() + "/events.json");
+		JSONPath = new File(configPath.getPath() + "/AmbientEvents");
+		JSONFile = new File(JSONPath.getPath() + "/events.json");
 		
 		if (!JSONPath.exists()) {
 			try {
@@ -58,8 +61,6 @@ public class ClientEventHandler extends CommonEventHandler {
 			}
 			return;
 		}
-		
-		JSONObject eventsJSON;
 			
 		try {
 			eventsJSON = new JSONObject(new String(Files.readAllBytes(JSONFile.toPath())));
