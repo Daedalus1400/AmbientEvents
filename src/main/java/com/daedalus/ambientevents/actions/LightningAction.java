@@ -5,7 +5,7 @@ import java.util.Random;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.daedalus.ambientevents.EventHandler;
+import com.daedalus.ambientevents.handlers.ClientEventHandler;
 import com.daedalus.ambientevents.wrappers.INumber;
 import com.daedalus.ambientevents.wrappers.IString;
 import com.daedalus.ambientevents.wrappers.Wrapper;
@@ -49,9 +49,9 @@ public class LightningAction extends CommonAction {
 				z = player.posZ;
 			break;
 			case "nearplayer":
-				x = player.posX + EventHandler.random.nextInt((int)radius.getValue() * 2) - radius.getValue();
+				x = player.posX + ClientEventHandler.random.nextInt((int)radius.getValue() * 2) - radius.getValue();
 				y = player.posY;
-				z = player.posZ + EventHandler.random.nextInt((int)radius.getValue() * 2) - radius.getValue();
+				z = player.posZ + ClientEventHandler.random.nextInt((int)radius.getValue() * 2) - radius.getValue();
 			break;
 			default:
 				x = 0;

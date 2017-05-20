@@ -13,14 +13,15 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class ClientStartupProxy extends CommonStartupProxy {
 	
+	@Override
 	public void preInit(FMLPreInitializationEvent e) {
 		super.preInit(e);
-		MinecraftForge.EVENT_BUS.register(AmbientEvents.eventHandler);
+		MinecraftForge.EVENT_BUS.register(AmbientEvents.clientEventHandler);
 	}
 	
+	@Override
 	public void init(FMLInitializationEvent e) {
 		super.init(e);
-		AmbientEvents.eventHandler.init();
+		AmbientEvents.clientEventHandler.init();
 	}
-	
 }

@@ -1,5 +1,10 @@
 package com.daedalus.ambientevents.proxy;
 
-public class ServerStartupProxy extends CommonStartupProxy {
+import com.daedalus.ambientevents.AmbientEvents;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
+public class ServerStartupProxy extends CommonStartupProxy {
+	
 }

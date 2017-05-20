@@ -1,4 +1,4 @@
-package com.daedalus.ambientevents;
+package com.daedalus.ambientevents.handlers;
 
 import java.util.Random;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -22,12 +23,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.daedalus.ambientevents.conditions.*;
-import com.daedalus.ambientevents.actions.*;
+import com.daedalus.ambientevents.AmbientEvents;
+import com.daedalus.ambientevents.Config;
+import com.daedalus.ambientevents.GenericEvent;
+import com.daedalus.ambientevents.wrappers.MapNumber;
 
 import org.json.*;
 
-public class EventHandler {
+public class ClientEventHandler extends CommonEventHandler {
 	
 	// Client side event handler
 	
@@ -43,8 +46,9 @@ public class EventHandler {
 	// Tracking Variables
 	public static long lastSleep = 0;
 	
+	@Override
 	public void init() {
-		if (Config.eventsRaw == "null") {
+		if (Config.eventsRaw.equals("null")) {
 			return;
 		}
 		
@@ -83,8 +87,8 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onLogon(PlayerLoggedInEvent e) {
 		player = e.player;
+		MapNumber.player = player;
 		
-		// TODO Change this to get data from world save
 		if (lastSleep == 0) {
 			lastSleep = player.world.getTotalWorldTime();
 		}

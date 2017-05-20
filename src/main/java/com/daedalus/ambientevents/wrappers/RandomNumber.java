@@ -2,7 +2,7 @@ package com.daedalus.ambientevents.wrappers;
 
 import org.json.JSONObject;
 
-import com.daedalus.ambientevents.EventHandler;
+import com.daedalus.ambientevents.handlers.ClientEventHandler;
 
 public class RandomNumber implements INumber {
 	
@@ -30,7 +30,7 @@ public class RandomNumber implements INumber {
 	
 	public double getValue() {
 		
-		return EventHandler.random.nextDouble()*(upperBound - lowerBound)+lowerBound;
+		return ClientEventHandler.random.nextDouble()*(upperBound - lowerBound)+lowerBound;
 	}
 
 }

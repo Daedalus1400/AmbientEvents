@@ -13,6 +13,9 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.daedalus.ambientevents.handlers.ClientEventHandler;
+import com.daedalus.ambientevents.handlers.CommonEventHandler;
+import com.daedalus.ambientevents.handlers.ServerEventHandler;
 import com.daedalus.ambientevents.proxy.CommonStartupProxy;
 
 import org.apache.logging.log4j.Level;
@@ -25,7 +28,7 @@ public class AmbientEvents {
 	public static CommonStartupProxy startupProxy;
 	
 	@SideOnly(Side.CLIENT)
-	public static EventHandler eventHandler = new EventHandler();
+	public static ClientEventHandler clientEventHandler = new ClientEventHandler();
 	
 	public static Logger logger;
 	

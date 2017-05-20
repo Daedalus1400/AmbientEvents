@@ -29,6 +29,9 @@ public class Wrapper {
 				switch(((JSONObject) args).getString("type")) {
 				
 				case "random":	return new RandomNumber((JSONObject)args);
+				case "randompick": return new RandomPickNumber((JSONObject)args);
+				case "sequentialpick": return new SequentialPickNumber((JSONObject) args);
+				case "map":		return new MapNumber((JSONObject)args);
 				
 				default:	throw new Exception("Numeric type not recognized");
 				}

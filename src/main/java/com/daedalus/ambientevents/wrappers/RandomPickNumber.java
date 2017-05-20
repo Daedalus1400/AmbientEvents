@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.daedalus.ambientevents.EventHandler;
+import com.daedalus.ambientevents.handlers.ClientEventHandler;
 import com.daedalus.ambientevents.wrappers.RandomPickString.WeightedString;
 
 public class RandomPickNumber implements INumber {
@@ -55,7 +55,7 @@ public class RandomPickNumber implements INumber {
 	
 	@Override
 	public double getValue() {
-		double test = EventHandler.random.nextDouble() * total;
+		double test = ClientEventHandler.random.nextDouble() * total;
 		double subtotal = 0;
 		for (int i = 0; i < values.size(); i++) {
 			subtotal += values.get(i).weight;

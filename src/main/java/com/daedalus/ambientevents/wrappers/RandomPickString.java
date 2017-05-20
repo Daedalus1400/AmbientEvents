@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.daedalus.ambientevents.EventHandler;
+import com.daedalus.ambientevents.handlers.ClientEventHandler;
 
 public class RandomPickString implements IString {
 
@@ -54,7 +54,7 @@ public class RandomPickString implements IString {
 	
 	@Override
 	public String getValue() {
-		double test = EventHandler.random.nextDouble() * total;
+		double test = ClientEventHandler.random.nextDouble() * total;
 		double subtotal = 0;
 		for (int i = 0; i < values.size(); i++) {
 			subtotal += values.get(i).weight;

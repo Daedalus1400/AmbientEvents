@@ -2,8 +2,8 @@ package com.daedalus.ambientevents.conditions;
 
 import org.json.JSONObject;
 
-import com.daedalus.ambientevents.EventHandler;
 import com.daedalus.ambientevents.comparisons.NumericComparison;
+import com.daedalus.ambientevents.handlers.ClientEventHandler;
 import com.daedalus.ambientevents.wrappers.INumber;
 import com.daedalus.ambientevents.wrappers.Wrapper;
 
@@ -30,7 +30,7 @@ public class TimeSinceSleepCondition implements ICondition {
 	
 	@Override
 	public boolean isMet(EntityPlayer player) {
-		if (comparison.compare(player.world.getTotalWorldTime() - EventHandler.lastSleep, checkValue.getValue() * 24000)) {
+		if (comparison.compare(player.world.getTotalWorldTime() - ClientEventHandler.lastSleep, checkValue.getValue() * 24000)) {
 			return true;
 		}
 		return false;
