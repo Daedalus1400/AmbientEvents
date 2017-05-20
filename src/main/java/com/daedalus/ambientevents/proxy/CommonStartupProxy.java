@@ -8,31 +8,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
-import java.io.File;
-
-import com.daedalus.ambientevents.AmbientEvents;
-import com.daedalus.ambientevents.Config;
-
 public class CommonStartupProxy {
-
-	public static Configuration config;
 	
 	public void preInit(FMLPreInitializationEvent e) {
-		File directory = e.getModConfigurationDirectory();
-		config = new Configuration(new File(directory.getPath(), "AmbientEvents.cfg"));
-		Config.readConfig();
+
 	}
 
 	public void init(FMLInitializationEvent e) {
 		
-
 	}
 
 	public void postInit(FMLPostInitializationEvent e) {
-		if (config.hasChanged()) {
-			config.save();
-		}
-		
+
 	}
 
 }

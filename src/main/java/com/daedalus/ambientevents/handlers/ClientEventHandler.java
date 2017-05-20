@@ -1,6 +1,8 @@
 package com.daedalus.ambientevents.handlers;
 
 import java.util.Random;
+import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -24,7 +26,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.daedalus.ambientevents.AmbientEvents;
-import com.daedalus.ambientevents.Config;
 import com.daedalus.ambientevents.GenericEvent;
 import com.daedalus.ambientevents.wrappers.MapNumber;
 
@@ -35,6 +36,7 @@ public class ClientEventHandler extends CommonEventHandler {
 	// Client side event handler
 	
 	public EntityPlayer player;
+	public File configPath;
 
 	protected int tick = 0;
 	public static Random random = new Random();
@@ -48,16 +50,26 @@ public class ClientEventHandler extends CommonEventHandler {
 	
 	@Override
 	public void init() {
-		if (Config.eventsRaw.equals("null")) {
+
+		File JSONPath = new File(configPath.getPath() + "/AmbientEvents");
+		File JSONFile = new File(JSONPath.getPath() + "/events.json");
+		
+		if (!JSONPath.exists()) {
+			try {
+				JSONPath.mkdirs();
+				JSONFile.createNewFile();
+			} catch (Exception e) {
+				AmbientEvents.logger.log(Level.ERROR, "Cannot create JSON file");
+			}
 			return;
 		}
 		
 		JSONObject eventsJSON;
-		
+			
 		try {
-			eventsJSON = new JSONObject(Config.eventsRaw);
+			eventsJSON = new JSONObject(new String(Files.readAllBytes(JSONFile.toPath())));
 		} catch (Exception e) {
-			AmbientEvents.logger.log(Level.ERROR, "Error parsing config: Invalid JSON");
+			AmbientEvents.logger.log(Level.ERROR, "Cannot parse JSON file");
 			return;
 		}
 		
