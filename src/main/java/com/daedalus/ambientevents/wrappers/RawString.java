@@ -5,12 +5,12 @@ public class RawString implements IString {
 	protected String value;
 
 	public RawString(String valueIn) {
-		value = valueIn;
+		this.value = valueIn;
 	}
-	
+
 	@Override
 	public String getValue() {
-		return value;
+		return this.value;
 	}
 
 }

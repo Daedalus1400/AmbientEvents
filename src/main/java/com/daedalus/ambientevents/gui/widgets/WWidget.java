@@ -1,10 +1,8 @@
 package com.daedalus.ambientevents.gui.widgets;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 
@@ -15,62 +13,104 @@ public class WWidget extends GuiScreen {
 	protected int widgetWidth;
 	protected int widgetHeight;
 	protected boolean visible;
-	
+
+	protected WWidget focus;
+	protected boolean hasFocus;
+
 	protected ArrayList<WWidget> subWidgets = new ArrayList<WWidget>();
 	protected WWidget parent;
-	
+
 	public WWidget(WWidget parent) {
 		if (parent != null) {
 			parent.addWidget(this);
 		}
 	}
-	
+
 	public void move(int x, int y) {
-		offsetX = x;
-		offsetY = y;
+		this.offsetX = x;
+		this.offsetY = y;
 	}
-	
+
 	public void setSize(int widthIn, int heightIn) {
-		widgetWidth = widthIn;
-		widgetHeight = heightIn;
+		this.widgetWidth = widthIn;
+		this.widgetHeight = heightIn;
 	}
-	
+
 	public boolean isMouseOver(int mouseX, int mouseY) {
-		return (mouseX >= 0) && (mouseX <= widgetWidth) && (mouseY >= 0) && (mouseY<= widgetHeight);
+		return (mouseX >= 0) && (mouseX <= this.widgetWidth) && (mouseY >= 0) && (mouseY <= this.widgetHeight);
 	}
-	
+
 	public void onMouseClick(int mouseX, int mouseY, int mouseButton) {
-		for (WWidget subwidget : subWidgets) {
-			if (subwidget.isMouseOver(mouseX - subwidget.offsetX, mouseY - subwidget.offsetY)) {
-				subwidget.onMouseClick(mouseX - subwidget.offsetX, mouseY - subwidget.offsetY, mouseButton);
+		for (int i = this.subWidgets.size() - 1; i < -1; i--) {
+			if (this.subWidgets.get(i).isMouseOver(mouseX - this.subWidgets.get(i).offsetX,
+					mouseY - this.subWidgets.get(i).offsetY)) {
+				this.subWidgets.get(i).onMouseClick(mouseX - this.subWidgets.get(i).offsetX,
+						mouseY - this.subWidgets.get(i).offsetY, mouseButton);
+				if (this.focus != null) {
+					this.focus.setUnfocused();
+				}
+				this.focus = this.subWidgets.get(i);
+				this.focus.setFocused();
+				break;
 			}
 		}
 	}
-	
+
+	public void setFocused() {
+		this.hasFocus = true;
+	}
+
+	public void setUnfocused() {
+		this.hasFocus = false;
+		if (this.focus != null) {
+			this.focus.setUnfocused();
+		}
+	}
+
+	public boolean isFocused() {
+		return this.hasFocus;
+	}
+
 	public void onMouseRelease(int mouseX, int mouseY, int state) {
-		
+		if (this.focus != null) {
+			this.focus.onMouseRelease(mouseX, mouseY, state);
+		}
 	}
-	
+
+	public void onMouseDrag(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
+		if (this.focus != null) {
+			this.focus.onMouseDrag(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
+		}
+	}
+
+	public void onKeyTyped(char typedChar, int keyCode) {
+		if (this.focus != null) {
+			this.focus.onKeyTyped(typedChar, keyCode);
+		}
+	}
+
 	public void addWidget(WWidget widget) {
-		subWidgets.add(widget);
+		this.subWidgets.add(widget);
 	}
-	
+
 	public void show() {
-		visible = true;
+		this.visible = true;
 	}
-	
+
 	public void hide() {
-		visible = false;
+		this.visible = false;
 	}
-	
+
 	public void draw(Minecraft mc, int mouseX, int mouseY) {
-		if (visible) {
-			GlStateManager.pushMatrix(); {
-				GlStateManager.translate(offsetX, offsetY, 0);
-				for (WWidget subwidget : subWidgets) {
+		if (this.visible) {
+			GlStateManager.pushMatrix();
+			{
+				GlStateManager.translate(this.offsetX, this.offsetY, 0);
+				for (WWidget subwidget : this.subWidgets) {
 					subwidget.draw(mc, mouseX - subwidget.offsetX, mouseY - subwidget.offsetY);
 				}
-			} GlStateManager.popMatrix();
+			}
+			GlStateManager.popMatrix();
 		}
 	}
 }

@@ -10,19 +10,19 @@ public class SequentialPickNumber implements INumber {
 	protected ArrayList<Double> values;
 	protected int index;
 	protected int max;
-	
+
 	public SequentialPickNumber(JSONObject args) throws Exception {
 		if (args.has("text")) {
-			
+
 			Object text = args.get("text");
 			if (text instanceof JSONArray) {
-				
-				max = ((JSONArray)text).length();
-				values = new ArrayList<Double>(max);
-				
-				for (int i = 0; i < max; i++) {
-					values.add(((JSONArray)text).getDouble(i));
-					
+
+				this.max = ((JSONArray) text).length();
+				this.values = new ArrayList<Double>(this.max);
+
+				for (int i = 0; i < this.max; i++) {
+					this.values.add(((JSONArray) text).getDouble(i));
+
 				}
 			} else {
 				throw new Exception("Unrecognized text value specified");
@@ -31,14 +31,14 @@ public class SequentialPickNumber implements INumber {
 			throw new Exception("No text specified");
 		}
 	}
-	
+
 	@Override
 	public double getValue() {
-		if (index == max) {
-			index = 0;
+		if (this.index == this.max) {
+			this.index = 0;
 		}
 
-		return values.get(index++);
+		return this.values.get(this.index++);
 	}
 
 }

@@ -14,17 +14,17 @@ public class RandomPickString implements IString {
 
 	public RandomPickString(JSONObject args) throws Exception {
 		if (args.has("text")) {
-			
+
 			Object text = args.get("text");
 			if (text instanceof JSONArray) {
-				
-				int max = ((JSONArray)text).length();
-				values = new ArrayList<WeightedString>(max);
-				
+
+				int max = ((JSONArray) text).length();
+				this.values = new ArrayList<WeightedString>(max);
+
 				for (int i = 0; i < max; i++) {
 					Object string = ((JSONArray) text).get(i);
 					if (string instanceof String) {
-						values.add(new WeightedString((String)string, 1.0D));
+						this.values.add(new WeightedString((String) string, 1.0D));
 					} else if (string instanceof JSONObject) {
 						WeightedString ws = new WeightedString();
 						if (((JSONObject) string).has("string")) {
@@ -37,7 +37,7 @@ public class RandomPickString implements IString {
 						} else {
 							ws.weight = 1;
 						}
-						values.add(ws);
+						this.values.add(ws);
 					}
 				}
 			} else {
@@ -46,35 +46,36 @@ public class RandomPickString implements IString {
 		} else {
 			throw new Exception("No text specified");
 		}
-		
-		for (int i = 0; i < values.size(); i++) {
-			total += values.get(i).weight;
+
+		for (int i = 0; i < this.values.size(); i++) {
+			this.total += this.values.get(i).weight;
 		}
 	}
-	
+
 	@Override
 	public String getValue() {
-		double test = ClientEventHandler.random.nextDouble() * total;
+		double test = ClientEventHandler.random.nextDouble() * this.total;
 		double subtotal = 0;
-		for (int i = 0; i < values.size(); i++) {
-			subtotal += values.get(i).weight;
+		for (int i = 0; i < this.values.size(); i++) {
+			subtotal += this.values.get(i).weight;
 			if (test < subtotal) {
-				return values.get(i).string;
+				return this.values.get(i).string;
 			}
 		}
-		
+
 		return "";
 	}
 
 	protected class WeightedString {
 		public String string;
 		public double weight;
-		
-		public WeightedString() {}
-		
+
+		public WeightedString() {
+		}
+
 		public WeightedString(String stringIn, double weightIn) {
-			string = stringIn;
-			weight = weightIn;
+			this.string = stringIn;
+			this.weight = weightIn;
 		}
 	}
 }

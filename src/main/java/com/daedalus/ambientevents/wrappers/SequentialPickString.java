@@ -10,19 +10,19 @@ public class SequentialPickString implements IString {
 	protected ArrayList<String> values;
 	protected int index;
 	protected int max;
-	
+
 	public SequentialPickString(JSONObject args) throws Exception {
 		if (args.has("text")) {
-			
+
 			Object text = args.get("text");
 			if (text instanceof JSONArray) {
-				
-				max = ((JSONArray)text).length();
-				values = new ArrayList<String>(max);
-				
-				for (int i = 0; i < max; i++) {
-					values.add(((JSONArray)text).getString(i));
-					
+
+				this.max = ((JSONArray) text).length();
+				this.values = new ArrayList<String>(this.max);
+
+				for (int i = 0; i < this.max; i++) {
+					this.values.add(((JSONArray) text).getString(i));
+
 				}
 			} else {
 				throw new Exception("Unrecognized text value specified");
@@ -31,13 +31,13 @@ public class SequentialPickString implements IString {
 			throw new Exception("No text specified");
 		}
 	}
-	
+
 	@Override
 	public String getValue() {
-		if (index == max) {
-			index = 0;
+		if (this.index == this.max) {
+			this.index = 0;
 		}
 
-		return values.get(index++);
+		return this.values.get(this.index++);
 	}
 }

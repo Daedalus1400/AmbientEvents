@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.daedalus.ambientevents.handlers.ClientEventHandler;
-import com.daedalus.ambientevents.wrappers.RandomPickString.WeightedString;
 
 public class RandomPickNumber implements INumber {
 
@@ -15,17 +14,17 @@ public class RandomPickNumber implements INumber {
 
 	public RandomPickNumber(JSONObject args) throws Exception {
 		if (args.has("value")) {
-			
+
 			Object value = args.get("value");
 			if (value instanceof JSONArray) {
-				
-				int max = ((JSONArray)value).length();
-				values = new ArrayList<WeightedNumber>(max);
-				
+
+				int max = ((JSONArray) value).length();
+				this.values = new ArrayList<WeightedNumber>(max);
+
 				for (int i = 0; i < max; i++) {
 					Object number = ((JSONArray) value).get(i);
 					if (number instanceof Double) {
-						values.add(new WeightedNumber((double)number, 1.0D));
+						this.values.add(new WeightedNumber((double) number, 1.0D));
 					} else if (number instanceof JSONObject) {
 						WeightedNumber wn = new WeightedNumber();
 						if (((JSONObject) number).has("string")) {
@@ -38,7 +37,7 @@ public class RandomPickNumber implements INumber {
 						} else {
 							wn.weight = 1;
 						}
-						values.add(wn);
+						this.values.add(wn);
 					}
 				}
 			} else {
@@ -47,35 +46,36 @@ public class RandomPickNumber implements INumber {
 		} else {
 			throw new Exception("No text specified");
 		}
-		
-		for (int i = 0; i < values.size(); i++) {
-			total += values.get(i).weight;
+
+		for (int i = 0; i < this.values.size(); i++) {
+			this.total += this.values.get(i).weight;
 		}
 	}
-	
+
 	@Override
 	public double getValue() {
-		double test = ClientEventHandler.random.nextDouble() * total;
+		double test = ClientEventHandler.random.nextDouble() * this.total;
 		double subtotal = 0;
-		for (int i = 0; i < values.size(); i++) {
-			subtotal += values.get(i).weight;
+		for (int i = 0; i < this.values.size(); i++) {
+			subtotal += this.values.get(i).weight;
 			if (test < subtotal) {
-				return values.get(i).number;
+				return this.values.get(i).number;
 			}
 		}
-		
+
 		return 0;
 	}
 
 	protected class WeightedNumber {
 		public double number;
 		public double weight;
-		
-		public WeightedNumber() {}
-		
+
+		public WeightedNumber() {
+		}
+
 		public WeightedNumber(double numberIn, double weightIn) {
-			number = numberIn;
-			weight = weightIn;
+			this.number = numberIn;
+			this.weight = weightIn;
 		}
 	}
 

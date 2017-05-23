@@ -14,72 +14,78 @@ public class MapNumber implements INumber {
 	protected double outHigh;
 	protected boolean clamp;
 	protected String input;
-	
+
 	public static EntityPlayer player;
-	
+
 	public MapNumber(JSONObject args) throws Exception {
 		if (args.has("input")) {
-			input = args.getString("input");
+			this.input = args.getString("input");
 		} else {
 			throw new Exception("No input specified");
 		}
-		
+
 		if (args.has("inlow")) {
-			inLow = args.getDouble("inlow");
+			this.inLow = args.getDouble("inlow");
 		} else {
-			inLow = 0;
+			this.inLow = 0;
 		}
-		
+
 		if (args.has("inhigh")) {
-			inHigh = args.getDouble("inhigh");
+			this.inHigh = args.getDouble("inhigh");
 		} else {
 			throw new Exception("No input high specified");
 		}
-		
+
 		if (args.has("outlow")) {
-			outLow = args.getDouble("outlow");
+			this.outLow = args.getDouble("outlow");
 		} else {
-			outLow = 0;
+			this.outLow = 0;
 		}
-		
+
 		if (args.has("outhigh")) {
-			outHigh = args.getDouble("outhigh");
+			this.outHigh = args.getDouble("outhigh");
 		} else {
 			throw new Exception("No output high specified");
 		}
-		
+
 		if (args.has("clamp")) {
-			clamp = args.getString("clamp").equals("true");
+			this.clamp = args.getString("clamp").equals("true");
 		} else {
-			clamp = false;
+			this.clamp = false;
 		}
 	}
-	
+
 	@Override
 	public double getValue() {
-		
+
 		double value = 0;
-		
-		switch (input) {
-		
-		case "playerposx":	value = player.posX;
-		case "playerposy":	value = player.posY;
-		case "playerposz":	value = player.posZ;
-		case "timeofday":	value = player.world.getWorldTime();
-		case "worldtime":	value = (double)player.world.getTotalWorldTime() / 24000;
-		case "timesincesleep":	value = (double)(player.world.getTotalWorldTime() - ClientEventHandler.lastSleep) / 24000; 
+
+		switch (this.input) {
+
+		case "playerposx":
+			value = player.posX;
+		case "playerposy":
+			value = player.posY;
+		case "playerposz":
+			value = player.posZ;
+		case "timeofday":
+			value = player.world.getWorldTime();
+		case "worldtime":
+			value = (double) player.world.getTotalWorldTime() / 24000;
+		case "timesincesleep":
+			value = (double) (player.world.getTotalWorldTime() - ClientEventHandler.lastSleep) / 24000;
 		}
-		
-		double output = (value - inLow) / (inHigh - inLow) * (outHigh - outLow) + outLow;
-		
-		if (clamp) {
-			if (output > outHigh) {
-				output = outHigh;
-			} else if (output < outLow) {
-				output = outLow;
+
+		double output = (value - this.inLow) / (this.inHigh - this.inLow) * (this.outHigh - this.outLow) + this.outLow;
+
+		if (this.clamp) {
+			if (output > this.outHigh) {
+				output = this.outHigh;
+			} else if (output < this.outLow) {
+				output = this.outLow;
 			}
 		}
-		
+
 		return output;
 	}
 

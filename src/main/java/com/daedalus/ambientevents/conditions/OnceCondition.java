@@ -5,13 +5,13 @@ import net.minecraft.entity.player.EntityPlayer;
 public class OnceCondition implements ICondition {
 
 	protected boolean fired = false;
-	
+
 	@Override
 	public boolean isMet(EntityPlayer player) {
-		if (fired) {
+		if (this.fired) {
 			return false;
 		}
-		fired = true;
+		this.fired = true;
 		return true;
 	}
 

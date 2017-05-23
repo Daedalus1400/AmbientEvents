@@ -12,24 +12,24 @@ public class WorldTimeCondition implements ICondition {
 
 	protected NumericComparison comparison;
 	protected INumber checkValue;
-	
+
 	public WorldTimeCondition(JSONObject args) throws Exception {
 		if (args.has("comparison")) {
-			comparison = new NumericComparison(Wrapper.newString(args.get("comparison")));
+			this.comparison = new NumericComparison(Wrapper.newString(args.get("comparison")));
 		} else {
 			throw new Exception("No comparison specified");
 		}
-		
+
 		if (args.has("value")) {
-			checkValue = Wrapper.newNumber(args.get("value"));
+			this.checkValue = Wrapper.newNumber(args.get("value"));
 		} else {
 			throw new Exception("No value specified");
 		}
 	}
-	
+
 	@Override
 	public boolean isMet(EntityPlayer player) {
-		if (comparison.compare(player.world.getTotalWorldTime(), checkValue.getValue() * 24000)) {
+		if (this.comparison.compare(player.world.getTotalWorldTime(), this.checkValue.getValue() * 24000)) {
 			return true;
 		}
 		return false;

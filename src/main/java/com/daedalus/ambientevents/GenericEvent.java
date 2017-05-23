@@ -1,8 +1,6 @@
 package com.daedalus.ambientevents;
 
 import org.json.JSONObject;
-import org.apache.logging.log4j.Level;
-import org.json.JSONArray;
 
 import com.daedalus.ambientevents.actions.IAction;
 import com.daedalus.ambientevents.actions.MasterAction;
@@ -15,15 +13,15 @@ public class GenericEvent {
 
 	protected ICondition condition;
 	protected IAction action;
-	
+
 	public GenericEvent(JSONObject args) throws Exception {
-			condition = new MasterCondition(args.getJSONArray("conditions"));
-			action = new MasterAction(args.getJSONArray("actions"));		
+		this.condition = new MasterCondition(args.getJSONArray("conditions"));
+		this.action = new MasterAction(args.getJSONArray("actions"));
 	}
-	
+
 	public void process(EntityPlayer player) {
-		if (condition.isMet(player)) {
-			action.execute(player);
+		if (this.condition.isMet(player)) {
+			this.action.execute(player);
 		}
 	}
 }
