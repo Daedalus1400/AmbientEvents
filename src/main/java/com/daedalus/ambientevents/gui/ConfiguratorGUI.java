@@ -13,7 +13,6 @@ public class ConfiguratorGUI extends WWidget {
 	protected JSONObject eventsJSON;
 
 	protected WVanillaButton exit;
-	// private GuiButton exit;
 
 	private final int EXIT = 0;
 
@@ -25,16 +24,20 @@ public class ConfiguratorGUI extends WWidget {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		this.draw(this.mc, mouseX, mouseY);
+		this.draw(mouseX, mouseY, partialTicks);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	@Override
 	public void initGui() {
 		super.initGui();
-		this.exit = new WVanillaButton(this, this.EXIT, this.width / 2 - 100, this.height - 20, 200, 20, "Exit");
+		this.subWidgets.clear();
+		
+		this.exit = new WVanillaButton(this, this.EXIT, "Exit");
+		this.exit.setSize(50, 20);
+		this.exit.move(this.width/2 - 25, this.height - 20);
 		this.exit.setOnClickAction(this::exit);
-		this.exit.show();
+		
 		this.show();
 	}
 

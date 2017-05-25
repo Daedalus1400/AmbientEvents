@@ -19,10 +19,12 @@ public class WWidget extends GuiScreen {
 
 	protected ArrayList<WWidget> subWidgets = new ArrayList<WWidget>();
 	protected WWidget parent;
-
-	public WWidget(WWidget parent) {
-		if (parent != null) {
-			parent.addWidget(this);
+	
+	public WWidget(WWidget parentIn) {
+		if (parentIn != null) {
+			this.parent = parentIn;
+			this.parent.addWidget(this);
+			this.mc = this.parent.mc;
 		}
 	}
 
@@ -95,19 +97,25 @@ public class WWidget extends GuiScreen {
 
 	public void show() {
 		this.visible = true;
+		for (WWidget subwidget : this.subWidgets) {
+			subwidget.show();
+		}
 	}
 
 	public void hide() {
 		this.visible = false;
+		for (WWidget subwidget : this.subWidgets) {
+			subwidget.hide();
+		}
 	}
 
-	public void draw(Minecraft mc, int mouseX, int mouseY) {
+	public void draw(int mouseX, int mouseY, float partialTicks) {
 		if (this.visible) {
 			GlStateManager.pushMatrix();
 			{
 				GlStateManager.translate(this.offsetX, this.offsetY, 0);
 				for (WWidget subwidget : this.subWidgets) {
-					subwidget.draw(mc, mouseX - subwidget.offsetX, mouseY - subwidget.offsetY);
+					subwidget.draw(mouseX - subwidget.offsetX, mouseY - subwidget.offsetY, partialTicks);
 				}
 			}
 			GlStateManager.popMatrix();
