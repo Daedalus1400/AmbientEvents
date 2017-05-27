@@ -2,7 +2,8 @@ package com.daedalus.ambientevents.gui.widgets;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.Minecraft;
+import com.daedalus.ambientevents.gui.Palette;
+
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 
@@ -10,21 +11,24 @@ public class WWidget extends GuiScreen {
 
 	public int offsetX = 0;
 	public int offsetY = 0;
-	protected int widgetWidth;
-	protected int widgetHeight;
 	protected boolean visible;
 
 	protected WWidget focus;
 	protected boolean hasFocus;
+	protected boolean mouseOver;
+
+	protected WWidget dragTarget;
 
 	protected ArrayList<WWidget> subWidgets = new ArrayList<WWidget>();
 	protected WWidget parent;
-	
+	public Palette palette;
+
 	public WWidget(WWidget parentIn) {
 		if (parentIn != null) {
 			this.parent = parentIn;
 			this.parent.addWidget(this);
 			this.mc = this.parent.mc;
+			this.palette = this.parent.palette;
 		}
 	}
 
@@ -34,12 +38,13 @@ public class WWidget extends GuiScreen {
 	}
 
 	public void setSize(int widthIn, int heightIn) {
-		this.widgetWidth = widthIn;
-		this.widgetHeight = heightIn;
+		this.width = widthIn;
+		this.height = heightIn;
 	}
 
 	public boolean isMouseOver(int mouseX, int mouseY) {
-		return (mouseX >= 0) && (mouseX <= this.widgetWidth) && (mouseY >= 0) && (mouseY <= this.widgetHeight);
+		this.mouseOver = (mouseX >= 0) && (mouseX <= this.width) && (mouseY >= 0) && (mouseY <= this.height);
+		return this.mouseOver;
 	}
 
 	public void onMouseClick(int mouseX, int mouseY, int mouseButton) {
@@ -53,6 +58,7 @@ public class WWidget extends GuiScreen {
 				}
 				this.focus = this.subWidgets.get(i);
 				this.focus.setFocused();
+				this.dragTarget = this.focus;
 				break;
 			}
 		}
@@ -75,13 +81,15 @@ public class WWidget extends GuiScreen {
 
 	public void onMouseRelease(int mouseX, int mouseY, int state) {
 		if (this.focus != null) {
-			this.focus.onMouseRelease(mouseX, mouseY, state);
+			this.focus.onMouseRelease(mouseX - this.focus.offsetX, mouseY - this.focus.offsetY, state);
 		}
+		this.dragTarget = null;
 	}
 
 	public void onMouseDrag(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
-		if (this.focus != null) {
-			this.focus.onMouseDrag(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
+		if (this.dragTarget != null) {
+			this.dragTarget.onMouseDrag(mouseX - this.dragTarget.offsetX, mouseY - this.dragTarget.offsetY,
+					clickedMouseButton, timeSinceLastClick);
 		}
 	}
 
@@ -115,10 +123,51 @@ public class WWidget extends GuiScreen {
 			{
 				GlStateManager.translate(this.offsetX, this.offsetY, 0);
 				for (WWidget subwidget : this.subWidgets) {
-					subwidget.draw(mouseX - subwidget.offsetX, mouseY - subwidget.offsetY, partialTicks);
+					GlStateManager.pushMatrix();
+					{
+						GlStateManager.translate(subwidget.offsetX, subwidget.offsetY, 0);
+						subwidget.draw(mouseX - subwidget.offsetX, mouseY - subwidget.offsetY, partialTicks);
+					}
+					GlStateManager.popMatrix();
 				}
 			}
 			GlStateManager.popMatrix();
+		}
+	}
+
+	public static int mixColors(int color1, int color2) {
+		int out = 0;
+		for (int i = 0; i < 32; i += 8) {
+			int color1A = color1 & (0b11111111 << i);
+			int color2A = color2 & (0b11111111 << i);
+			out ^= ((color1A + color2A) >> 1) & (0b11111111 << i);
+		}
+		return out;
+	}
+
+	public static float getAlpha(int color) {
+		return ((color & 0xff000000) >> 24) / 255.0f;
+	}
+
+	public static float getRed(int color) {
+		return ((color & 0x00ff0000) >> 16) / 255.0f;
+	}
+
+	public static float getGreen(int color) {
+		return ((color & 0x0000ff00) >> 8) / 255.0f;
+	}
+
+	public static float getBlue(int color) {
+		return (color & 0x000000ff) / 255.0f;
+	}
+
+	public static Number constrain(Number input, Number low, Number high) {
+		if (input.doubleValue() > high.doubleValue()) {
+			return high;
+		} else if (input.doubleValue() < low.doubleValue()) {
+			return low;
+		} else {
+			return input;
 		}
 	}
 }

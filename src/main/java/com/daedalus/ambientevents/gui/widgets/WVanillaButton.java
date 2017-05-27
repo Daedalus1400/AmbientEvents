@@ -2,13 +2,7 @@ package com.daedalus.ambientevents.gui.widgets;
 
 import java.util.function.Consumer;
 
-import com.daedalus.ambientevents.actions.PlaySoundAction;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 
 public class WVanillaButton extends WAbstractButton {
 
@@ -16,7 +10,7 @@ public class WVanillaButton extends WAbstractButton {
 	protected GuiButton button;
 	protected int buttonID;
 	protected String buttonText;
-	
+
 	public WVanillaButton(WWidget parentIn, int ID, String text) {
 		this(parentIn, ID, 0, 0, 0, 0, text);
 	}
@@ -29,12 +23,12 @@ public class WVanillaButton extends WAbstractButton {
 		this.setSize(widthIn, heightIn);
 		this.move(x, y);
 	}
-	
+
 	@Override
 	public void initGui() {
-		this.button = new GuiButton(buttonID, 0, 0, 0, 0, buttonText);
+		this.button = new GuiButton(this.buttonID, 0, 0, 0, 0, this.buttonText);
 	}
-	
+
 	@Override
 	public void setSize(int widthIn, int heightIn) {
 		super.setSize(widthIn, heightIn);
@@ -46,12 +40,7 @@ public class WVanillaButton extends WAbstractButton {
 	public void draw(int mouseX, int mouseY, float partialTicks) {
 		if (this.visible) {
 			super.draw(mouseX, mouseY, partialTicks);
-			GlStateManager.pushMatrix();
-			{
-				GlStateManager.translate(this.offsetX, this.offsetY, 0);
-				this.button.drawButton(mc, mouseX, mouseY);
-			}
-			GlStateManager.popMatrix();
+			this.button.drawButton(this.mc, mouseX, mouseY);
 		}
 	}
 }

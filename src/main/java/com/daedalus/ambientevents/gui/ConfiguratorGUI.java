@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.json.JSONObject;
 
+import com.daedalus.ambientevents.gui.widgets.WScrollBar;
 import com.daedalus.ambientevents.gui.widgets.WVanillaButton;
 import com.daedalus.ambientevents.gui.widgets.WWidget;
 import com.daedalus.ambientevents.handlers.ClientEventHandler;
@@ -13,6 +14,8 @@ public class ConfiguratorGUI extends WWidget {
 	protected JSONObject eventsJSON;
 
 	protected WVanillaButton exit;
+	protected WScrollBar horizontalBar;
+	protected WScrollBar verticalBar;
 
 	private final int EXIT = 0;
 
@@ -25,6 +28,7 @@ public class ConfiguratorGUI extends WWidget {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		this.draw(mouseX, mouseY, partialTicks);
+
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
@@ -32,12 +36,21 @@ public class ConfiguratorGUI extends WWidget {
 	public void initGui() {
 		super.initGui();
 		this.subWidgets.clear();
-		
+
+		this.palette = new Palette();
+		this.palette.primary = 0xffa0a0a0;
+		this.palette.secondary = 0xffc0c0c0;
+		this.palette.background = 0xff000000;
+		this.palette.text = 0xff000000;
+		this.palette.edging = 0xff404040;
+		this.palette.trim = 0xff808080;
+		this.palette.highlight = 0xffb0b0ff;
+
 		this.exit = new WVanillaButton(this, this.EXIT, "Exit");
 		this.exit.setSize(50, 20);
-		this.exit.move(this.width/2 - 25, this.height - 20);
+		this.exit.move(this.width / 2 - 25, this.height - 20);
 		this.exit.setOnClickAction(this::exit);
-		
+
 		this.show();
 	}
 
@@ -71,6 +84,7 @@ public class ConfiguratorGUI extends WWidget {
 			if (subwidget.isMouseOver(mouseX - subwidget.offsetX, mouseY - subwidget.offsetY)) {
 				subwidget.onMouseClick(mouseX - subwidget.offsetX, mouseY - subwidget.offsetY, mouseButton);
 				this.focus = subwidget;
+				this.dragTarget = this.focus;
 				break;
 			}
 		}
