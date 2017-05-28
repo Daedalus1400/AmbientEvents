@@ -17,6 +17,8 @@ public class ConfiguratorGUI extends WWidget {
 
 	protected WVanillaButton exit;
 	protected WListView<String> listView;
+	
+	protected boolean firstStart = true;
 
 	private final int EXIT = 0;
 
@@ -36,9 +38,14 @@ public class ConfiguratorGUI extends WWidget {
 	@Override
 	public void initGui() {
 		super.initGui();
-		this.subWidgets.clear();
+		//this.subWidgets.clear();
 
-		this.palette = new Palette();
+		if (this.firstStart) {
+			this.palette = new Palette();
+			this.listView = new WListView<String>(this);
+			this.exit = new WVanillaButton(this, this.EXIT, "Exit");
+		}
+		
 		this.palette.primary = 0xffa0a0a0;
 		this.palette.secondary = 0xffc0c0c0;
 		this.palette.background = 0xff000000;
@@ -47,7 +54,8 @@ public class ConfiguratorGUI extends WWidget {
 		this.palette.trim = 0xff808080;
 		this.palette.highlight = 0xffb0b0ff;
 
-		this.listView = new WListView<String>(this);
+		// Start Widget Testing Code
+		
 		this.listView.setSize(this.width / 3, this.height / 2);
 		this.listView.move(this.width/3, this.height/4);
 		
@@ -60,12 +68,15 @@ public class ConfiguratorGUI extends WWidget {
 		
 		this.listView.populate(dummyText);
 		
-		this.exit = new WVanillaButton(this, this.EXIT, "Exit");
+		// End Widget Testing Code
+		
 		this.exit.setSize(50, 20);
 		this.exit.move(this.width / 2 - 25, this.height - 20);
 		this.exit.setOnClickAction(this::exit);
 
 		this.show();
+		
+		this.firstStart = false;
 	}
 
 	@Override

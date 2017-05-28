@@ -18,6 +18,7 @@ public class WListView <T> extends WWidget {
 	protected int count;
 	protected int displayRange;
 	protected int elementHeight;
+	protected int selected = -1;
 	
 	protected int scrollBarWidth = 7;
 	protected int elementPadding = 2;
@@ -37,18 +38,34 @@ public class WListView <T> extends WWidget {
 		this.scrollBar.move(this.width - this.scrollBarWidth, 0);
 		this.displayRange = this.height / this.fontRendererObj.FONT_HEIGHT;
 		this.scrollBar.setDisplayRange(this.displayRange);
+		if (selected > -1) {
+			this.scrollBar.goTo(this.selected + this.location);
+		}
 	}
 	
 	@Override
 	public void draw(int mouseX, int mouseY, float partialTicks) {
 		this.drawRect(0, 0, this.width, this.height, this.palette.primary);
 		super.draw(mouseX, mouseY, partialTicks);
+		if (this.elements.size() < this.location + this.displayRange) {
+			this.scrollBar.goTo(this.displayRange - this.elements.size());
+		}
 		int drawnElements = this.displayRange > this.elements.size() ? this.elements.size() : this.displayRange;
+		int elementUnderMouse = this.getElementUnderMouse(mouseX, mouseY);
 		for (int i = 0; i < drawnElements; i++) {
+			int textColor;
+			if (i == elementUnderMouse) {
+				textColor = mixColors(this.palette.text, this.palette.highlight);
+			} else {
+				textColor = this.palette.text;
+			}
 			GlStateManager.pushMatrix();
 			{
-				GlStateManager.translate(this.elementPadding, i * this.fontRendererObj.FONT_HEIGHT + this.elementPadding, 0);
-				this.fontRendererObj.drawString(this.elements.get(i + this.location).text, 0, 0, this.palette.text);
+				GlStateManager.translate(0, i * this.fontRendererObj.FONT_HEIGHT, 0);
+				if (i == this.selected) {
+					this.drawRect(0, 1, this.width - this.scrollBarWidth, this.fontRendererObj.FONT_HEIGHT + 1, this.palette.highlight);
+				}
+				this.fontRendererObj.drawString(this.elements.get(i + this.location).text, this.elementPadding, this.elementPadding, textColor);
 			}
 			GlStateManager.popMatrix();
 		}
@@ -61,11 +78,20 @@ public class WListView <T> extends WWidget {
 			return;
 		}
 		
+		int localSelected = this.getElementUnderMouse(mouseX, mouseY);
+		
+		if (localSelected < 0) {
+			return;
+		}
+		
+		this.selected = localSelected;
+		
+		int elementID = this.selected + location;
+		if (elementID >= this.elements.size()) {
+			return;
+		}
+		
 		if (callback != null) {
-			int elementID = this.getElementUnderMouse(mouseX, mouseY) + location;
-			if (elementID < 0 || elementID >= this.elements.size()) {
-				return;
-			}
 			callback.accept(this.elements.get(elementID).item);
 		}
 	}
@@ -75,7 +101,7 @@ public class WListView <T> extends WWidget {
 			return -1;
 		}
 		for (int i = 0; i < this.displayRange; i++) {
-			if (mouseY > i * this.fontRendererObj.FONT_HEIGHT + 2 && mouseY < (i + 1) * this.fontRendererObj.FONT_HEIGHT) {
+			if (mouseY > i * this.fontRendererObj.FONT_HEIGHT + 2 && mouseY <= (i + 1) * this.fontRendererObj.FONT_HEIGHT) {
 				return i;
 			}
 		}
@@ -118,7 +144,11 @@ public class WListView <T> extends WWidget {
 	}
 	
 	protected void scrollTo(int index) {
+		this.selected += this.location - index;
 		this.location = index;
 	}
 
+	public void setOnElementSelectedAction(Consumer<T> onElementSelectedAction) {
+		this.callback = onElementSelectedAction;
+	}
 }

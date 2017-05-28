@@ -80,9 +80,6 @@ public class WScrollBar extends WWidget {
 	}
 
 	public void goTo(int index) {
-		if (index == this.location || index != constrain(index, 0, this.steps).intValue()) {
-			return;
-		}
 		this.location = constrain(index, 0, this.steps).intValue();
 		if (this.orientation == Orientation.HORIZONTAL) {
 			this.barOffsetX = (int) (this.location * this.stepSize);
@@ -91,9 +88,13 @@ public class WScrollBar extends WWidget {
 			this.barOffsetY = (int) (this.location * this.stepSize);
 			this.barOffsetX = 0;
 		}
+		
+		if (index == this.location) {
+			return;
+		}
 
 		if (this.callback != null) {
-			this.callback.accept(constrain(index, 0, this.displayCount).intValue());
+			this.callback.accept(constrain(index, 0, this.steps).intValue());
 		}
 	}
 
