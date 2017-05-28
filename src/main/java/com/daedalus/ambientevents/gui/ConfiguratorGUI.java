@@ -1,10 +1,12 @@
 package com.daedalus.ambientevents.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.json.JSONObject;
 
-import com.daedalus.ambientevents.gui.widgets.WScrollBar;
+import com.daedalus.ambientevents.gui.widgets.WListElement;
+import com.daedalus.ambientevents.gui.widgets.WListView;
 import com.daedalus.ambientevents.gui.widgets.WVanillaButton;
 import com.daedalus.ambientevents.gui.widgets.WWidget;
 import com.daedalus.ambientevents.handlers.ClientEventHandler;
@@ -14,8 +16,7 @@ public class ConfiguratorGUI extends WWidget {
 	protected JSONObject eventsJSON;
 
 	protected WVanillaButton exit;
-	protected WScrollBar horizontalBar;
-	protected WScrollBar verticalBar;
+	protected WListView<String> listView;
 
 	private final int EXIT = 0;
 
@@ -46,6 +47,19 @@ public class ConfiguratorGUI extends WWidget {
 		this.palette.trim = 0xff808080;
 		this.palette.highlight = 0xffb0b0ff;
 
+		this.listView = new WListView<String>(this);
+		this.listView.setSize(this.width / 3, this.height / 2);
+		this.listView.move(this.width/3, this.height/4);
+		
+		ArrayList<WListElement<String>> dummyText = new ArrayList<WListElement<String>> ();
+		for (int i = 0; i < 30; i++) {
+			WListElement<String> dummy = new WListElement<String> ();
+			dummy.text = String.format("%d", i);
+			dummyText.add(dummy);
+		}
+		
+		this.listView.populate(dummyText);
+		
 		this.exit = new WVanillaButton(this, this.EXIT, "Exit");
 		this.exit.setSize(50, 20);
 		this.exit.move(this.width / 2 - 25, this.height - 20);
@@ -80,10 +94,16 @@ public class ConfiguratorGUI extends WWidget {
 
 	@Override
 	public void onMouseClick(int mouseX, int mouseY, int mouseButton) {
-		for (WWidget subwidget : this.subWidgets) {
-			if (subwidget.isMouseOver(mouseX - subwidget.offsetX, mouseY - subwidget.offsetY)) {
-				subwidget.onMouseClick(mouseX - subwidget.offsetX, mouseY - subwidget.offsetY, mouseButton);
-				this.focus = subwidget;
+		for (int i = this.subWidgets.size() - 1; i > -1; i--) {
+			
+			if (this.subWidgets.get(i).isMouseOver(mouseX - this.subWidgets.get(i).offsetX,
+					mouseY - this.subWidgets.get(i).offsetY)) {
+				
+				this.subWidgets.get(i).onMouseClick(mouseX - this.subWidgets.get(i).offsetX,
+						mouseY - this.subWidgets.get(i).offsetY, mouseButton);
+				
+				this.focus = this.subWidgets.get(i);
+				this.focus.setFocused();
 				this.dragTarget = this.focus;
 				break;
 			}

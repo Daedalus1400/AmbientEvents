@@ -29,6 +29,7 @@ public class WWidget extends GuiScreen {
 			this.parent.addWidget(this);
 			this.mc = this.parent.mc;
 			this.palette = this.parent.palette;
+			this.fontRendererObj = this.parent.fontRendererObj;
 		}
 	}
 
@@ -48,11 +49,14 @@ public class WWidget extends GuiScreen {
 	}
 
 	public void onMouseClick(int mouseX, int mouseY, int mouseButton) {
-		for (int i = this.subWidgets.size() - 1; i < -1; i--) {
+		for (int i = this.subWidgets.size() - 1; i > -1; i--) {
+			
 			if (this.subWidgets.get(i).isMouseOver(mouseX - this.subWidgets.get(i).offsetX,
 					mouseY - this.subWidgets.get(i).offsetY)) {
+				
 				this.subWidgets.get(i).onMouseClick(mouseX - this.subWidgets.get(i).offsetX,
 						mouseY - this.subWidgets.get(i).offsetY, mouseButton);
+				
 				if (this.focus != null) {
 					this.focus.setUnfocused();
 				}
@@ -61,6 +65,20 @@ public class WWidget extends GuiScreen {
 				this.dragTarget = this.focus;
 				break;
 			}
+		}
+	}
+	
+	public void onMouseRelease(int mouseX, int mouseY, int state) {
+		if (this.focus != null) {
+			this.focus.onMouseRelease(mouseX - this.focus.offsetX, mouseY - this.focus.offsetY, state);
+		}
+		this.dragTarget = null;
+	}
+
+	public void onMouseDrag(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
+		if (this.dragTarget != null) {
+			this.dragTarget.onMouseDrag(mouseX - this.dragTarget.offsetX, mouseY - this.dragTarget.offsetY,
+					clickedMouseButton, timeSinceLastClick);
 		}
 	}
 
@@ -77,20 +95,6 @@ public class WWidget extends GuiScreen {
 
 	public boolean isFocused() {
 		return this.hasFocus;
-	}
-
-	public void onMouseRelease(int mouseX, int mouseY, int state) {
-		if (this.focus != null) {
-			this.focus.onMouseRelease(mouseX - this.focus.offsetX, mouseY - this.focus.offsetY, state);
-		}
-		this.dragTarget = null;
-	}
-
-	public void onMouseDrag(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
-		if (this.dragTarget != null) {
-			this.dragTarget.onMouseDrag(mouseX - this.dragTarget.offsetX, mouseY - this.dragTarget.offsetY,
-					clickedMouseButton, timeSinceLastClick);
-		}
 	}
 
 	public void onKeyTyped(char typedChar, int keyCode) {
@@ -119,19 +123,15 @@ public class WWidget extends GuiScreen {
 
 	public void draw(int mouseX, int mouseY, float partialTicks) {
 		if (this.visible) {
-			GlStateManager.pushMatrix();
-			{
-				GlStateManager.translate(this.offsetX, this.offsetY, 0);
-				for (WWidget subwidget : this.subWidgets) {
-					GlStateManager.pushMatrix();
-					{
-						GlStateManager.translate(subwidget.offsetX, subwidget.offsetY, 0);
-						subwidget.draw(mouseX - subwidget.offsetX, mouseY - subwidget.offsetY, partialTicks);
-					}
-					GlStateManager.popMatrix();
+			
+			for (WWidget subwidget : this.subWidgets) {
+				GlStateManager.pushMatrix();
+				{
+					GlStateManager.translate(subwidget.offsetX, subwidget.offsetY, 0);
+					subwidget.draw(mouseX - subwidget.offsetX, mouseY - subwidget.offsetY, partialTicks);
 				}
+				GlStateManager.popMatrix();
 			}
-			GlStateManager.popMatrix();
 		}
 	}
 
