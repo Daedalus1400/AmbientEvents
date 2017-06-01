@@ -9,6 +9,7 @@ import com.daedalus.ambientevents.gui.widgets.WListElement;
 import com.daedalus.ambientevents.gui.widgets.WListView;
 import com.daedalus.ambientevents.gui.widgets.WPushButton;
 import com.daedalus.ambientevents.gui.widgets.WVanillaButton;
+import com.daedalus.ambientevents.gui.widgets.WVanillaTextField;
 import com.daedalus.ambientevents.gui.widgets.WWidget;
 import com.daedalus.ambientevents.handlers.ClientEventHandler;
 
@@ -19,8 +20,6 @@ public class ConfiguratorGUI extends WWidget {
 	protected WPushButton exit;
 	
 	protected boolean firstStart = true;
-
-	private final int EXIT = 0;
 
 	public ConfiguratorGUI() {
 		super(null);
@@ -46,7 +45,7 @@ public class ConfiguratorGUI extends WWidget {
 		
 		// Start Widget Testing Code
 		
-		
+
 		
 		// End Widget Testing Code
 		
@@ -83,25 +82,8 @@ public class ConfiguratorGUI extends WWidget {
 		this.onKeyTyped(typedChar, keyCode);
 	}
 
-	@Override
-	public void onMouseClick(int mouseX, int mouseY, int mouseButton) {
-		for (int i = this.subWidgets.size() - 1; i > -1; i--) {
-			
-			if (this.subWidgets.get(i).isMouseOver(mouseX - this.subWidgets.get(i).offsetX,
-					mouseY - this.subWidgets.get(i).offsetY)) {
-				
-				this.subWidgets.get(i).onMouseClick(mouseX - this.subWidgets.get(i).offsetX,
-						mouseY - this.subWidgets.get(i).offsetY, mouseButton);
-				
-				this.focus = this.subWidgets.get(i);
-				this.focus.setFocused();
-				this.dragTarget = this.focus;
-				break;
-			}
-		}
-	}
-
 	public void exit(int i) {
+		WVanillaTextField.nextID = 0;
 		this.mc.displayGuiScreen(null);
 	}
 }

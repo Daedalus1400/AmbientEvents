@@ -13,8 +13,8 @@ public class WPushButton extends WAbstractButton {
 		this.setLabel(textIn);
 	}
 
-	public void setLabel(String textIn) {
-		this.label = textIn;
+	public void setLabel(String labelIn) {
+		this.label = labelIn;
 	}
 
 	@Override
