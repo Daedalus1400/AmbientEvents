@@ -2,10 +2,6 @@ package com.daedalus.ambientevents.gui.widgets;
 
 import java.util.function.Consumer;
 
-import org.apache.logging.log4j.Level;
-
-import com.daedalus.ambientevents.AmbientEvents;
-
 import net.minecraft.client.renderer.GlStateManager;
 
 public class WScrollBar extends WWidget {
@@ -88,7 +84,7 @@ public class WScrollBar extends WWidget {
 			this.barOffsetY = (int) (this.location * this.stepSize);
 			this.barOffsetX = 0;
 		}
-		
+
 		if (index == this.location) {
 			return;
 		}

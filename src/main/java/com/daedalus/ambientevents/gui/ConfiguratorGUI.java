@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import com.daedalus.ambientevents.gui.widgets.WListElement;
 import com.daedalus.ambientevents.gui.widgets.WListView;
+import com.daedalus.ambientevents.gui.widgets.WPushButton;
 import com.daedalus.ambientevents.gui.widgets.WVanillaButton;
 import com.daedalus.ambientevents.gui.widgets.WWidget;
 import com.daedalus.ambientevents.handlers.ClientEventHandler;
@@ -15,8 +16,7 @@ public class ConfiguratorGUI extends WWidget {
 
 	protected JSONObject eventsJSON;
 
-	protected WVanillaButton exit;
-	protected WListView<String> listView;
+	protected WPushButton exit;
 	
 	protected boolean firstStart = true;
 
@@ -38,35 +38,15 @@ public class ConfiguratorGUI extends WWidget {
 	@Override
 	public void initGui() {
 		super.initGui();
-		//this.subWidgets.clear();
 
 		if (this.firstStart) {
 			this.palette = new Palette();
-			this.listView = new WListView<String>(this);
-			this.exit = new WVanillaButton(this, this.EXIT, "Exit");
+			this.exit = new WPushButton(this, "Exit");
 		}
 		
-		this.palette.primary = 0xffa0a0a0;
-		this.palette.secondary = 0xffc0c0c0;
-		this.palette.background = 0xff000000;
-		this.palette.text = 0xff000000;
-		this.palette.edging = 0xff404040;
-		this.palette.trim = 0xff808080;
-		this.palette.highlight = 0xffb0b0ff;
-
 		// Start Widget Testing Code
 		
-		this.listView.setSize(this.width / 3, this.height / 2);
-		this.listView.move(this.width/3, this.height/4);
 		
-		ArrayList<WListElement<String>> dummyText = new ArrayList<WListElement<String>> ();
-		for (int i = 0; i < 30; i++) {
-			WListElement<String> dummy = new WListElement<String> ();
-			dummy.text = String.format("%d", i);
-			dummyText.add(dummy);
-		}
-		
-		this.listView.populate(dummyText);
 		
 		// End Widget Testing Code
 		
@@ -124,5 +104,4 @@ public class ConfiguratorGUI extends WWidget {
 	public void exit(int i) {
 		this.mc.displayGuiScreen(null);
 	}
-
 }

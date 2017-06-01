@@ -1,0 +1,117 @@
+{
+	"events": {
+		"conditions": {
+			"alwaystrue": {},
+			"canseesky": {},
+			"chance": {
+				"value": "INumber"
+			},
+			"once": {},
+			"playerpos": {
+				"dimension": [
+					"x",
+					"y",
+					"z"
+				],
+				"comparison": [
+					">",
+					"<"
+				],
+				"value": "INumber"
+			},
+			"timeofday": {
+				"comparison": [
+					">",
+					"<"
+				],
+				"value": "INumber"
+			},
+			"timesincesleep": {
+				"comparison": [
+					">",
+					"<"
+				],
+				"value": "INumber"
+			},
+			"weather": {
+				"condition": [
+					"clear",
+					"raining",
+					"thundering"
+				]
+			},
+			"worldtime": {
+				"comparison": [
+					">",
+					"<"
+				],
+				"value": "INumber"
+			}
+		},
+		"actions": {
+			"chat": {
+				"message": "IString",
+				"chance": "INumber"
+			},
+			"lightning": {
+				"target": [
+					"player",
+					"nearplayer"
+				],
+				"radius": "INumber",
+				"chance": "INumber"
+			},
+			"playsound": {
+				"sound": "IString",
+				"category": [
+					"ambient",
+					"blocks",
+					"hostile",
+					"master",
+					"music",
+					"player",
+					"record",
+					"voice",
+					"weather"
+				],
+				"volume": "INumber",
+				"pitch": "INumber",
+				"chance": "INumber"
+			},
+			"potioneffect": {
+				"effect": [
+					"absorption",
+					"blindness",
+					"fireresist", 
+					"glowing",
+					"haste",
+					"healthboost",
+					"hunger",
+					"instantdamage",
+					"instanthealth",
+					"invisibility",
+					"jumpboost",
+					"levitation",
+					"luck",
+					"miningfatigue",
+					"nausea",
+					"nightvision",
+					"poison",
+					"regeneration",
+					"resistance",
+					"saturation",
+					"slowness",
+					"speed",
+					"strength",
+					"unluck",
+					"waterbreathing",
+					"weakness",
+					"wither"
+				],
+				"duration": "INumber",
+				"amplifier": "INumber",
+				"chance": "INumber"
+			}
+		}
+	}
+}

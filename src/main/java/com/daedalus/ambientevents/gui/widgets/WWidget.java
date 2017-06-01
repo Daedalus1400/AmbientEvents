@@ -50,13 +50,13 @@ public class WWidget extends GuiScreen {
 
 	public void onMouseClick(int mouseX, int mouseY, int mouseButton) {
 		for (int i = this.subWidgets.size() - 1; i > -1; i--) {
-			
+
 			if (this.subWidgets.get(i).isMouseOver(mouseX - this.subWidgets.get(i).offsetX,
 					mouseY - this.subWidgets.get(i).offsetY)) {
-				
+
 				this.subWidgets.get(i).onMouseClick(mouseX - this.subWidgets.get(i).offsetX,
 						mouseY - this.subWidgets.get(i).offsetY, mouseButton);
-				
+
 				if (this.focus != null) {
 					this.focus.setUnfocused();
 				}
@@ -67,7 +67,7 @@ public class WWidget extends GuiScreen {
 			}
 		}
 	}
-	
+
 	public void onMouseRelease(int mouseX, int mouseY, int state) {
 		if (this.focus != null) {
 			this.focus.onMouseRelease(mouseX - this.focus.offsetX, mouseY - this.focus.offsetY, state);
@@ -123,7 +123,7 @@ public class WWidget extends GuiScreen {
 
 	public void draw(int mouseX, int mouseY, float partialTicks) {
 		if (this.visible) {
-			
+
 			for (WWidget subwidget : this.subWidgets) {
 				GlStateManager.pushMatrix();
 				{
