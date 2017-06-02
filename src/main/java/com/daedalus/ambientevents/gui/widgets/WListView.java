@@ -13,13 +13,12 @@ public class WListView<T> extends WWidget {
 	protected int location;
 	protected int count;
 	protected int displayRange;
-	protected int elementHeight;
 	protected int selected = -1;
 
 	protected int scrollBarWidth = 7;
 	protected int elementPadding = 2;
 
-	protected Consumer<T> callback;
+	protected Consumer<WListElement<T>> callback;
 
 	public WListView(WWidget parentIn) {
 		super(parentIn);
@@ -41,31 +40,33 @@ public class WListView<T> extends WWidget {
 
 	@Override
 	public void draw(int mouseX, int mouseY, float partialTicks) {
-		this.drawRect(0, 0, this.width, this.height, this.palette.primary);
-		super.draw(mouseX, mouseY, partialTicks);
-		if (this.elements.size() < this.location + this.displayRange) {
-			this.scrollBar.goTo(this.displayRange - this.elements.size());
-		}
-		int drawnElements = this.displayRange > this.elements.size() ? this.elements.size() : this.displayRange;
-		int elementUnderMouse = this.getElementUnderMouse(mouseX, mouseY);
-		for (int i = 0; i < drawnElements; i++) {
-			int textColor;
-			if (i == elementUnderMouse) {
-				textColor = mixColors(this.palette.text, this.palette.highlight);
-			} else {
-				textColor = this.palette.text;
+		if (this.visible) {
+			this.drawRect(0, 0, this.width, this.height, this.palette.primary);
+			super.draw(mouseX, mouseY, partialTicks);
+			if (this.elements.size() < this.location + this.displayRange) {
+				this.scrollBar.goTo(this.displayRange - this.elements.size());
 			}
-			GlStateManager.pushMatrix();
-			{
-				GlStateManager.translate(0, i * this.fontRendererObj.FONT_HEIGHT, 0);
-				if (i == this.selected) {
-					this.drawRect(0, 1, this.width - this.scrollBarWidth, this.fontRendererObj.FONT_HEIGHT + 1,
-							this.palette.highlight);
+			int drawnElements = this.displayRange > this.elements.size() ? this.elements.size() : this.displayRange;
+			int elementUnderMouse = this.getElementUnderMouse(mouseX, mouseY);
+			for (int i = 0; i < drawnElements; i++) {
+				int textColor;
+				if (i == elementUnderMouse) {
+					textColor = mixColors(this.palette.text, this.palette.highlight);
+				} else {
+					textColor = this.palette.text;
 				}
-				this.fontRendererObj.drawString(this.elements.get(i + this.location).text, this.elementPadding,
-						this.elementPadding, textColor);
+				GlStateManager.pushMatrix();
+				{
+					GlStateManager.translate(0, i * this.fontRendererObj.FONT_HEIGHT, 0);
+					if (i == this.selected) {
+						this.drawRect(0, 1, this.width - this.scrollBarWidth, this.fontRendererObj.FONT_HEIGHT + 1,
+								this.palette.highlight);
+					}
+					this.fontRendererObj.drawString(this.elements.get(i + this.location).text, this.elementPadding,
+							this.elementPadding, textColor);
+				}
+				GlStateManager.popMatrix();
 			}
-			GlStateManager.popMatrix();
 		}
 	}
 
@@ -90,7 +91,7 @@ public class WListView<T> extends WWidget {
 		}
 
 		if (this.callback != null) {
-			this.callback.accept(this.elements.get(elementID).item);
+			this.callback.accept(this.elements.get(elementID));
 		}
 	}
 
@@ -105,6 +106,10 @@ public class WListView<T> extends WWidget {
 			}
 		}
 		return -1;
+	}
+	
+	public void fitToListSize() {
+		this.setSize(this.width, this.elements.size() * this.fontRendererObj.FONT_HEIGHT);
 	}
 
 	public void populate(ArrayList<WListElement<T>> elementsIn) {
@@ -147,7 +152,7 @@ public class WListView<T> extends WWidget {
 		this.location = index;
 	}
 
-	public void setOnElementSelectedAction(Consumer<T> onElementSelectedAction) {
+	public void setOnElementSelectedAction(Consumer<WListElement<T>> onElementSelectedAction) {
 		this.callback = onElementSelectedAction;
 	}
 }

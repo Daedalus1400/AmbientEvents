@@ -63,7 +63,9 @@ public class WVanillaTextField extends WWidget {
 
 	@Override
 	public void draw(int mouseX, int mouseY, float partialTicks) {
-		this.textField.drawTextBox();
+		if (this.visible) {
+			this.textField.drawTextBox();
+		}
 	}
 
 	protected void checkText() {

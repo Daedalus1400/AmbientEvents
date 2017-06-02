@@ -4,7 +4,7 @@
 			"alwaystrue": {},
 			"canseesky": {},
 			"chance": {
-				"value": "INumber"
+				"value": "-?\\d*\\.?\\d*"
 			},
 			"once": {},
 			"playerpos": {
@@ -17,21 +17,21 @@
 					">",
 					"<"
 				],
-				"value": "INumber"
+				"value": "-?\\d*\\.?\\d*"
 			},
 			"timeofday": {
 				"comparison": [
 					">",
 					"<"
 				],
-				"value": "INumber"
+				"value": "-?\\d*\\.?\\d*"
 			},
 			"timesincesleep": {
 				"comparison": [
 					">",
 					"<"
 				],
-				"value": "INumber"
+				"value": "-?\\d*\\.?\\d*"
 			},
 			"weather": {
 				"condition": [
@@ -45,24 +45,24 @@
 					">",
 					"<"
 				],
-				"value": "INumber"
+				"value": "-?\\d*\\.?\\d*"
 			}
 		},
 		"actions": {
 			"chat": {
-				"message": "IString",
-				"chance": "INumber"
+				"message": ".*",
+				"chance": "-?\\d*\\.?\\d*"
 			},
 			"lightning": {
 				"target": [
 					"player",
 					"nearplayer"
 				],
-				"radius": "INumber",
-				"chance": "INumber"
+				"radius": "-?\\d*\\.?\\d*",
+				"chance": "-?\\d*\\.?\\d*"
 			},
 			"playsound": {
-				"sound": "IString",
+				"sound": ".*",
 				"category": [
 					"ambient",
 					"blocks",
@@ -74,9 +74,9 @@
 					"voice",
 					"weather"
 				],
-				"volume": "INumber",
-				"pitch": "INumber",
-				"chance": "INumber"
+				"volume": "-?\\d*\\.?\\d*",
+				"pitch": "-?\\d*\\.?\\d*",
+				"chance": "-?\\d*\\.?\\d*"
 			},
 			"potioneffect": {
 				"effect": [
@@ -108,9 +108,9 @@
 					"weakness",
 					"wither"
 				],
-				"duration": "INumber",
-				"amplifier": "INumber",
-				"chance": "INumber"
+				"duration": "-?\\d*\\.?\\d*",
+				"amplifier": "-?\\d*\\.?\\d*",
+				"chance": "-?\\d*\\.?\\d*"
 			}
 		}
 	}

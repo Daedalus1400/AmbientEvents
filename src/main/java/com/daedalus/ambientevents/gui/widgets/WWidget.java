@@ -47,7 +47,7 @@ public class WWidget extends GuiScreen {
 	public void onMouseClick(int mouseX, int mouseY, int mouseButton) {
 		for (int i = this.subWidgets.size() - 1; i > -1; i--) {
 
-			if (this.subWidgets.get(i).isMouseOver(mouseX - this.subWidgets.get(i).offsetX,
+			if (this.subWidgets.get(i).isVisible() && this.subWidgets.get(i).isMouseOver(mouseX - this.subWidgets.get(i).offsetX,
 					mouseY - this.subWidgets.get(i).offsetY)) {
 
 				this.subWidgets.get(i).onMouseClick(mouseX - this.subWidgets.get(i).offsetX,
@@ -92,6 +92,10 @@ public class WWidget extends GuiScreen {
 	public boolean isFocused() {
 		return this.hasFocus;
 	}
+	
+	public boolean isVisible() {
+		return this.visible;
+	}
 
 	public void onKeyTyped(char typedChar, int keyCode) {
 		if (this.focus != null) {
@@ -114,6 +118,13 @@ public class WWidget extends GuiScreen {
 		}
 	}
 	
+	public void hide() {
+		this.visible = false;
+		for (WWidget subwidget : this.subWidgets) {
+			subwidget.hide();
+		}
+	}
+	
 	public void setParent(WWidget parentIn) {
 		if (this.parent != null) {
 			this.parent.removeWidget(this);
@@ -123,13 +134,6 @@ public class WWidget extends GuiScreen {
 		this.mc = this.parent.mc;
 		this.palette = this.parent.palette;
 		this.fontRendererObj = this.parent.fontRendererObj;
-	}
-
-	public void hide() {
-		this.visible = false;
-		for (WWidget subwidget : this.subWidgets) {
-			subwidget.hide();
-		}
 	}
 
 	public void draw(int mouseX, int mouseY, float partialTicks) {

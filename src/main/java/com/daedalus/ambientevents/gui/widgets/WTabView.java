@@ -37,8 +37,16 @@ public class WTabView extends WWidget {
 	}
 	
 	@Override
+	public void show() {
+		this.visible = true;
+		this.onTabSwitch(0);
+	}
+	
+	@Override
 	public void draw(int mouseX, int mouseY, float partialTicks) {
-		this.drawRect(0, 0, this.width, this.height, this.palette.edging);
-		super.draw(mouseX, mouseY, partialTicks);
+		if (this.visible) {
+			this.drawRect(0, 0, this.width, this.height, this.palette.edging);
+			super.draw(mouseX, mouseY, partialTicks);
+		}
 	}
 }

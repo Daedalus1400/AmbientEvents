@@ -30,9 +30,11 @@ public class WTabLabel extends WAbstractButton {
 	
 	@Override
 	public void draw(int mouseX, int mouseY, float partialTicks) {
-		this.drawRect(0, 0, this.width, this.height, this.palette.edging);
-		this.drawRect(this.border, this.border, this.width - this.border, this.height - (this.hasFocus? 0 : this.border), this.palette.primary);
-		this.fontRendererObj.drawString(this.label, this.padding + this.border, this.padding + this.border, this.palette.text);
+		if (this.visible) {
+			this.drawRect(0, 0, this.width, this.height, this.palette.edging);
+			this.drawRect(this.border, this.border, this.width - this.border, this.height - (this.hasFocus? 0 : this.border), this.palette.primary);
+			this.fontRendererObj.drawString(this.label, this.padding + this.border, this.padding + this.border, this.palette.text);
+		}
 	}
 
 	@Override

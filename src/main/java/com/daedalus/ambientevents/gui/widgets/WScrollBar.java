@@ -76,6 +76,10 @@ public class WScrollBar extends WWidget {
 	}
 
 	public void goTo(int index) {
+		if (index == this.location) {
+			return;
+		}
+		
 		this.location = constrain(index, 0, this.steps).intValue();
 		if (this.orientation == Orientation.HORIZONTAL) {
 			this.barOffsetX = (int) (this.location * this.stepSize);
@@ -83,10 +87,6 @@ public class WScrollBar extends WWidget {
 		} else {
 			this.barOffsetY = (int) (this.location * this.stepSize);
 			this.barOffsetX = 0;
-		}
-
-		if (index == this.location) {
-			return;
 		}
 
 		if (this.callback != null) {
@@ -122,30 +122,31 @@ public class WScrollBar extends WWidget {
 
 	@Override
 	public void draw(int mouseX, int mouseY, float partialTicks) {
-
-		int trim = this.isMouseOverSlider(mouseX, mouseY) ? mixColors(this.palette.trim, this.palette.highlight)
-				: this.palette.trim;
-		int secondary = this.mouseOver ? mixColors(this.palette.secondary, this.palette.highlight)
-				: this.palette.secondary;
-		int edging = this.mouseOver ? mixColors(this.palette.edging, this.palette.highlight) : this.palette.edging;
-
-		GlStateManager.pushMatrix();
-		{
-			this.drawRect(0, 0, this.width, this.height, this.palette.edging);
-			GlStateManager.translate(this.barOffsetX, this.barOffsetY, 0);
-			this.drawRect(0, 0, this.barWidth, this.barHeight, trim);
-			this.drawRect(1, 1, this.barWidth - 1, this.barHeight - 1, secondary);
-
-			if (this.orientation == Orientation.VERTICAL) {
-				this.drawHorizontalLine(2, this.barWidth - 3, this.barHeight / 2, edging);
-				this.drawHorizontalLine(2, this.barWidth - 3, this.barHeight / 2 + 2, edging);
-				this.drawHorizontalLine(2, this.barWidth - 3, this.barHeight / 2 - 2, edging);
-			} else {
-				this.drawVerticalLine(this.barWidth / 2, 1, this.barHeight - 2, edging);
-				this.drawVerticalLine(this.barWidth / 2 + 2, 1, this.barHeight - 2, edging);
-				this.drawVerticalLine(this.barWidth / 2 - 2, 1, this.barHeight - 2, edging);
+		if (this.visible) {
+			int trim = this.isMouseOverSlider(mouseX, mouseY) ? mixColors(this.palette.trim, this.palette.highlight)
+					: this.palette.trim;
+			int secondary = this.mouseOver ? mixColors(this.palette.secondary, this.palette.highlight)
+					: this.palette.secondary;
+			int edging = this.mouseOver ? mixColors(this.palette.edging, this.palette.highlight) : this.palette.edging;
+	
+			GlStateManager.pushMatrix();
+			{
+				this.drawRect(0, 0, this.width, this.height, this.palette.edging);
+				GlStateManager.translate(this.barOffsetX, this.barOffsetY, 0);
+				this.drawRect(0, 0, this.barWidth, this.barHeight, trim);
+				this.drawRect(1, 1, this.barWidth - 1, this.barHeight - 1, secondary);
+	
+				if (this.orientation == Orientation.VERTICAL) {
+					this.drawHorizontalLine(2, this.barWidth - 3, this.barHeight / 2, edging);
+					this.drawHorizontalLine(2, this.barWidth - 3, this.barHeight / 2 + 2, edging);
+					this.drawHorizontalLine(2, this.barWidth - 3, this.barHeight / 2 - 2, edging);
+				} else {
+					this.drawVerticalLine(this.barWidth / 2, 1, this.barHeight - 2, edging);
+					this.drawVerticalLine(this.barWidth / 2 + 2, 1, this.barHeight - 2, edging);
+					this.drawVerticalLine(this.barWidth / 2 - 2, 1, this.barHeight - 2, edging);
+				}
 			}
+			GlStateManager.popMatrix();
 		}
-		GlStateManager.popMatrix();
 	}
 }
