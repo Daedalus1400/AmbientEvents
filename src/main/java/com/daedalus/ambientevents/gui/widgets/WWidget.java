@@ -25,11 +25,7 @@ public class WWidget extends GuiScreen {
 
 	public WWidget(WWidget parentIn) {
 		if (parentIn != null) {
-			this.parent = parentIn;
-			this.parent.addWidget(this);
-			this.mc = this.parent.mc;
-			this.palette = this.parent.palette;
-			this.fontRendererObj = this.parent.fontRendererObj;
+			this.setParent(parentIn);
 		}
 	}
 
@@ -106,12 +102,27 @@ public class WWidget extends GuiScreen {
 	public void addWidget(WWidget widget) {
 		this.subWidgets.add(widget);
 	}
+	
+	public void removeWidget(WWidget widget) {
+		this.subWidgets.remove(widget);
+	}
 
 	public void show() {
 		this.visible = true;
 		for (WWidget subwidget : this.subWidgets) {
 			subwidget.show();
 		}
+	}
+	
+	public void setParent(WWidget parentIn) {
+		if (this.parent != null) {
+			this.parent.removeWidget(this);
+		}
+		this.parent = parentIn;
+		this.parent.addWidget(this);
+		this.mc = this.parent.mc;
+		this.palette = this.parent.palette;
+		this.fontRendererObj = this.parent.fontRendererObj;
 	}
 
 	public void hide() {

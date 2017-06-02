@@ -3,19 +3,22 @@ package com.daedalus.ambientevents.gui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Level;
 import org.json.JSONObject;
 
-import com.daedalus.ambientevents.gui.widgets.WListElement;
-import com.daedalus.ambientevents.gui.widgets.WListView;
-import com.daedalus.ambientevents.gui.widgets.WPushButton;
-import com.daedalus.ambientevents.gui.widgets.WVanillaButton;
+import com.daedalus.ambientevents.AmbientEvents;
 import com.daedalus.ambientevents.gui.widgets.WVanillaTextField;
+import com.daedalus.ambientevents.gui.widgets.WPushButton;
 import com.daedalus.ambientevents.gui.widgets.WWidget;
 import com.daedalus.ambientevents.handlers.ClientEventHandler;
 
+import net.minecraft.util.ResourceLocation;
+
 public class ConfiguratorGUI extends WWidget {
 
-	protected JSONObject eventsJSON;
+	protected static JSONObject eventsJSON;
+	protected static JSONObject manifestJSON;
+	protected final static String manifestPath = "/assets/ambientevents/manifest.json";
 
 	protected WPushButton exit;
 	
@@ -23,7 +26,19 @@ public class ConfiguratorGUI extends WWidget {
 
 	public ConfiguratorGUI() {
 		super(null);
-		this.eventsJSON = ClientEventHandler.eventsJSON;
+		if (eventsJSON == null) {
+			eventsJSON = ClientEventHandler.eventsJSON;
+		}
+		
+		if (manifestJSON == null) {
+			byte b[] = new byte[4096];
+			try {
+				getClass().getResourceAsStream(manifestPath).read(b);
+			} catch (IOException e) {
+				AmbientEvents.logger.log(Level.ERROR, e);
+			}
+			manifestJSON = new JSONObject(b);
+		}
 	}
 
 	@Override
@@ -44,8 +59,8 @@ public class ConfiguratorGUI extends WWidget {
 		}
 		
 		// Start Widget Testing Code
-		
 
+		
 		
 		// End Widget Testing Code
 		

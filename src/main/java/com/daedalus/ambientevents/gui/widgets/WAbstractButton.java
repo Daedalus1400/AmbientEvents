@@ -24,7 +24,7 @@ public class WAbstractButton extends WWidget {
 	@Override
 	public void onMouseClick(int mouseX, int mouseY, int mouseButton) {
 		this.mc.world.playSound(this.mc.player.posX, this.mc.player.posY, this.mc.player.posZ,
-				PlaySoundAction.registry.get("ui.button.click"), SoundCategory.AMBIENT, 0.3f, 1.0f, true);
+				PlaySoundAction.registry.get("ui.button.click"), SoundCategory.MASTER, 0.3f, 1.0f, true);
 		if (this.callback != null) {
 			this.callback.accept(mouseButton);
 		}
