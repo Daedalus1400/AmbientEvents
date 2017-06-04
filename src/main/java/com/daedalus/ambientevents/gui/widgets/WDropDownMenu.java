@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
+import com.daedalus.ambientevents.gui.Palette;
+
 public class WDropDownMenu <T> extends WWidget {
 	
 	protected WListView<T> menu;
@@ -17,6 +19,8 @@ public class WDropDownMenu <T> extends WWidget {
 
 	public WDropDownMenu(WWidget parentIn) {
 		super(parentIn);
+		this.palette = new Palette();
+		this.palette.primary = this.parent.palette.secondary;
 		this.menu = new WListView<T> (this);
 		this.menu.setOnElementSelectedAction(this::onElementSelected);
 		this.dropButton = new WPushButton(this, "v");

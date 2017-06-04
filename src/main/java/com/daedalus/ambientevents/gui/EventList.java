@@ -15,10 +15,10 @@ import com.daedalus.ambientevents.wrappers.JSONKeyValuePair;
 public class EventList extends WWidget {
 
 	protected Consumer<JSONObject> selectedCallback;
+	protected Consumer<Integer> refreshCallback;
 	protected WListView<JSONKeyValuePair> listView;
 	protected WVanillaTextField nameField;
 	protected WPushButton newButton;
-	protected WPushButton duplicateButton;
 	protected WPushButton deleteButton;
 	
 	protected WListElement<JSONKeyValuePair> selected;
@@ -34,14 +34,12 @@ public class EventList extends WWidget {
 		this.listView.setOnElementSelectedAction(this::eventSelected);
 		
 		this.nameField = new WVanillaTextField(this);
+		this.nameField.setText("Event Name");
 		this.nameField.setOnTextChangedAction(this::renameEvent);
 		this.nameField.setValidRegex("[\\w ]*");
 		
 		this.newButton = new WPushButton(this, "New");
 		this.newButton.setOnClickAction(this::newEvent);
-		
-		this.duplicateButton = new WPushButton(this, "Duplicate");
-		this.duplicateButton.setOnClickAction(this::duplicateEvent);
 		
 		this.deleteButton = new WPushButton(this, "Delete");
 		this.deleteButton.setOnClickAction(this::deleteSelected);
@@ -63,14 +61,11 @@ public class EventList extends WWidget {
 		this.nameField.setSize(widthIn - this.padding * 3, textHeight);
 		this.nameField.move(this.padding + 1, this.padding + 1);
 		
-		this.newButton.setSize((this.width - this.padding * 2) / 3, textHeight);
+		this.newButton.setSize((this.width - this.padding * 2) / 2, textHeight);
 		this.newButton.move(this.padding, this.padding * 2 + textHeight);
 		
-		this.duplicateButton.setSize(this.newButton.width, this.newButton.height);
-		this.duplicateButton.move(this.newButton.width + this.newButton.offsetX, this.newButton.offsetY);
-		
-		this.deleteButton.setSize(sizeX - this.newButton.width - this.duplicateButton.width, this.newButton.height);
-		this.deleteButton.move(this.duplicateButton.width + this.duplicateButton.offsetX, this.newButton.offsetY);
+		this.deleteButton.setSize(sizeX - this.newButton.width, this.newButton.height);
+		this.deleteButton.move(this.newButton.width + this.newButton.offsetX, this.newButton.offsetY);
 		
 		this.listView.setSize(this.width - this.padding * 2, heightIn - this.newButton.height - this.newButton.offsetY - this.padding);
 		this.listView.move(this.padding, textHeight * 2 + this.padding * 2);
@@ -106,17 +101,6 @@ public class EventList extends WWidget {
 		this.listView.add(new WListElement<JSONKeyValuePair> (newName, new JSONKeyValuePair(newName, newEvent)));
 	}
 	
-	public void duplicateEvent(int mouseButton) {
-		if (this.selected == null) {
-			return;
-		}
-		String newName = String.format(this.selected.text + "%d", eventCounter++);
-		JSONKeyValuePair newPair = new JSONKeyValuePair(newName, this.selected.item.getJSONObject());
-		WListElement<JSONKeyValuePair> newElement = new WListElement<JSONKeyValuePair> (newName, newPair);
-		ConfiguratorGUI.eventsJSON.put(newName, newElement.item.getJSONObject());
-		this.listView.add(newElement);
-	}
-	
 	public void deleteSelected(int mouseButton) {
 		if (this.selected == null) {
 			return;
@@ -128,6 +112,9 @@ public class EventList extends WWidget {
 			index = this.listView.getSize() - 1;
 		} 
 		this.listView.select(index);
+		if (index < 0) {
+			this.eventSelected(null);
+		}
 	}
 	
 	public void renameEvent(String newName) {
@@ -145,14 +132,32 @@ public class EventList extends WWidget {
 		this.selected = newElement;
 	}
 	
+	public void rePopulate() {
+		int index = this.listView.getIndex(this.selected);
+		
+		Iterator<String> events = ConfiguratorGUI.eventsJSON.keys();
+		this.listView.clear();
+		while(events.hasNext()) {
+			String eventName = events.next();
+			this.listView.add(new WListElement<JSONKeyValuePair> (eventName, new JSONKeyValuePair(eventName, ConfiguratorGUI.eventsJSON.getJSONObject(eventName))));
+		}
+		
+		this.listView.select(index);
+	}
+	
 	public void setOnEventSelectedAction(Consumer<JSONObject> onEventSelectedAction) {
 		this.selectedCallback = onEventSelectedAction;
 	}
 	
 	protected void eventSelected(WListElement<JSONKeyValuePair> selectedElement) {
 		this.selected = selectedElement;
-		this.nameField.setText(this.selected.item.getKey());
-		this.onEventSelected(selectedElement.item.getJSONObject());
+		if (selected != null) {
+			this.nameField.setText(this.selected.item.getKey());
+			this.onEventSelected(selectedElement.item.getJSONObject());
+		} else {
+			this.nameField.setText("Event Name");
+			this.onEventSelected(null);
+		}
 	}
 
 	public void onEventSelected(JSONObject selectedElement) {

@@ -15,8 +15,8 @@ public class WListView<T> extends WWidget {
 	protected int displayRange;
 	protected int selected = -1;
 
-	protected int scrollBarWidth = 7;
-	protected int elementPadding = 2;
+	public int scrollBarWidth = 7;
+	public int elementPadding = 2;
 
 	protected Consumer<WListElement<T>> callback;
 
@@ -119,6 +119,14 @@ public class WListView<T> extends WWidget {
 		return -1;
 	}
 	
+	public WListElement<T> getSelected() {
+		int selection = this.selected + this.location;
+		if (selection < 0 || selection >= this.count) {
+			return null;
+		}
+		return this.get(this.selected + this.location);
+	}
+	
 	public void select(int index) {
 		if (index < this.location || index > this.location + this.displayRange) {
 			this.scrollBar.goTo(index);
@@ -182,6 +190,7 @@ public class WListView<T> extends WWidget {
 	
 	public void add(WListElement<T> element, int index) {
 		this.elements.add(index, element);
+		this.recount();
 	}
 
 	public void add(WListElement<T> elementIn) {

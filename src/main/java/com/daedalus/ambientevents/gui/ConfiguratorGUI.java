@@ -28,9 +28,12 @@ public class ConfiguratorGUI extends WWidget {
 	protected SubLists subLists;
 	
 	protected boolean firstStart = true;
+	
+	protected ClientEventHandler handler;
 
-	public ConfiguratorGUI() {
+	public ConfiguratorGUI(ClientEventHandler handlerIn) {
 		super(null);
+		this.handler = handlerIn;
 		if (eventsJSON == null) {
 			eventsJSON = ClientEventHandler.eventsJSON;
 		}

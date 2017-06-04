@@ -96,5 +96,6 @@ public class WVanillaTextField extends WWidget {
 	
 	public void setText(String textIn) {
 		this.textField.setText(textIn);
+		this.textField.setCursorPosition(0);
 	}
 }

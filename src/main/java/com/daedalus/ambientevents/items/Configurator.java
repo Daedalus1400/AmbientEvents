@@ -1,5 +1,6 @@
 package com.daedalus.ambientevents.items;
 
+import com.daedalus.ambientevents.AmbientEvents;
 import com.daedalus.ambientevents.gui.ConfiguratorGUI;
 
 import net.minecraft.client.Minecraft;
@@ -31,7 +32,7 @@ public class Configurator extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		if (worldIn.isRemote) {
-			Minecraft.getMinecraft().displayGuiScreen(new ConfiguratorGUI());
+			Minecraft.getMinecraft().displayGuiScreen(new ConfiguratorGUI(AmbientEvents.clientEventHandler));
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
