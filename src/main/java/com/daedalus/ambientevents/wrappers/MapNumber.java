@@ -71,18 +71,26 @@ public class MapNumber implements INumber {
 		case "timeofday":
 			value = player.world.getWorldTime();
 		case "worldtime":
-			value = (double) player.world.getTotalWorldTime() / 24000;
+			value = player.world.getTotalWorldTime() / 24000.0d;
 		case "timesincesleep":
-			value = (double) (player.world.getTotalWorldTime() - ClientEventHandler.lastSleep) / 24000;
+			value = (player.world.getTotalWorldTime() - ClientEventHandler.lastSleep) / 24000.0d;
 		}
 
 		double output = (value - this.inLow) / (this.inHigh - this.inLow) * (this.outHigh - this.outLow) + this.outLow;
 
 		if (this.clamp) {
-			if (output > this.outHigh) {
-				output = this.outHigh;
-			} else if (output < this.outLow) {
-				output = this.outLow;
+			if (this.inHigh > this.inLow) {
+				if (value > this.inHigh) {
+					output = this.outHigh;
+				} else if (value < this.inLow) {
+					output = this.outLow;
+				}
+			} else {
+				if (value < this.inHigh) {
+					output = this.outHigh;
+				} else if (value > this.inLow) {
+					output = this.outLow;
+				}
 			}
 		}
 
