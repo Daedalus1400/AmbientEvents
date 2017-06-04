@@ -25,6 +25,7 @@ public class ConfiguratorGUI extends WWidget {
 
 	protected WPushButton exit;
 	protected EventList eventList;
+	protected SubLists subLists;
 	
 	protected boolean firstStart = true;
 
@@ -60,16 +61,15 @@ public class ConfiguratorGUI extends WWidget {
 		if (this.firstStart) {
 			this.palette = new Palette();
 			this.exit = new WPushButton(this, "Exit");
-			this.eventList = new EventList(this, this.eventsJSON);
+			this.eventList = new EventList(this);
+			this.subLists = new SubLists(this);
 		}
 		
-		// Start Widget Testing Code
-
-		
-		
-		// End Widget Testing Code
-		
 		this.eventList.setSize(this.width/2, this.height/2);
+		this.eventList.setOnEventSelectedAction(this.subLists::populate);
+		
+		this.subLists.setSize(this.width/2, this.height/2);
+		this.subLists.move(this.width/2, 0);
 		
 		this.exit.setSize(50, 20);
 		this.exit.move(this.width / 2 - 25, this.height - 20);
@@ -104,6 +104,12 @@ public class ConfiguratorGUI extends WWidget {
 		this.onKeyTyped(typedChar, keyCode);
 	}
 
+	@Override
+	public void onGuiClosed() {
+		
+		super.onGuiClosed();
+	}
+	
 	public void exit(int i) {
 		WVanillaTextField.nextID = 0;
 		this.mc.displayGuiScreen(null);

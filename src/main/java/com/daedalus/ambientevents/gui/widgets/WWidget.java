@@ -40,7 +40,7 @@ public class WWidget extends GuiScreen {
 	}
 
 	public boolean isMouseOver(int mouseX, int mouseY) {
-		this.mouseOver = (mouseX >= 0) && (mouseX <= this.width) && (mouseY >= 0) && (mouseY <= this.height);
+		this.mouseOver = (mouseX >= 0) && (mouseX < this.width) && (mouseY >= 0) && (mouseY < this.height);
 		return this.mouseOver;
 	}
 

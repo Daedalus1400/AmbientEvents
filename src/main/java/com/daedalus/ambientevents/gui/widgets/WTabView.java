@@ -19,11 +19,21 @@ public class WTabView extends WWidget {
 	public void addTab(WWidget widgetIn, String labelIn) {
 		WTabLabel label = new WTabLabel(this, this.labels.size(), labelIn);
 		label.setOnClickAction(this::onTabSwitch);
+		if (this.labels.size() > 0) {
+			int location = this.labels.get(this.labels.size()-1).offsetX + this.labels.get(this.labels.size()-1).width;
+			label.move(location, 0);
+		} else {
+			label.move(this.border, 0);
+		}
 		this.labels.add(label);
+		
 		widgetIn.setParent(this);
 		widgetIn.move(this.border, label.height);
 		widgetIn.setSize(this.width - 2 * this.border, this.height - this.border - label.height);
 		this.widgets.add(widgetIn);
+		if (this.labels.size() == 1) {
+			this.labels.get(0).select();
+		}
 	}
 	
 	public void onTabSwitch(int tabID) {
@@ -32,20 +42,32 @@ public class WTabView extends WWidget {
 				this.widgets.get(i).show();
 			} else {
 				this.widgets.get(i).hide();
+				this.labels.get(i).deselect();
 			}
+		}
+	}
+	
+	@Override
+	public void setSize(int widthIn, int heightIn) {
+		super.setSize(widthIn, heightIn);
+		for (WWidget widget : this.widgets) {
+			widget.setSize(this.width - 2 * this.border, this.height - this.border - this.labels.get(0).height);
 		}
 	}
 	
 	@Override
 	public void show() {
 		this.visible = true;
+		for (WTabLabel label : labels) {
+			label.show();
+		}
 		this.onTabSwitch(0);
 	}
 	
 	@Override
 	public void draw(int mouseX, int mouseY, float partialTicks) {
-		if (this.visible) {
-			this.drawRect(0, 0, this.width, this.height, this.palette.edging);
+		if (this.visible && this.labels.size() > 1) {
+			this.drawRect(0, this.labels.get(0).height, this.width, this.height, this.palette.edging);
 			super.draw(mouseX, mouseY, partialTicks);
 		}
 	}

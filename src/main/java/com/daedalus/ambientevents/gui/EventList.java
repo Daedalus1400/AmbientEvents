@@ -14,22 +14,20 @@ import com.daedalus.ambientevents.wrappers.JSONKeyValuePair;
 
 public class EventList extends WWidget {
 
-	protected Consumer<JSONKeyValuePair> selectedCallback;
+	protected Consumer<JSONObject> selectedCallback;
 	protected WListView<JSONKeyValuePair> listView;
 	protected WVanillaTextField nameField;
 	protected WPushButton newButton;
 	protected WPushButton duplicateButton;
 	protected WPushButton deleteButton;
 	
-	protected JSONObject eventsJSON;
-	protected JSONObject manifestJSON;
 	protected WListElement<JSONKeyValuePair> selected;
 	
 	protected int padding = 2;
 	
 	public static int eventCounter = 0;
 	
-	public EventList(WWidget parentIn, JSONObject eventsJSONIn) {
+	public EventList(WWidget parentIn) {
 		super(parentIn);
 		
 		this.listView = new WListView<JSONKeyValuePair>(this);
@@ -74,7 +72,7 @@ public class EventList extends WWidget {
 		this.deleteButton.setSize(sizeX - this.newButton.width - this.duplicateButton.width, this.newButton.height);
 		this.deleteButton.move(this.duplicateButton.width + this.duplicateButton.offsetX, this.newButton.offsetY);
 		
-		this.listView.setSize(this.width - this.padding * 2, heightIn - this.newButton.height - this.newButton.offsetY);
+		this.listView.setSize(this.width - this.padding * 2, heightIn - this.newButton.height - this.newButton.offsetY - this.padding);
 		this.listView.move(this.padding, textHeight * 2 + this.padding * 2);
 	}
 	
@@ -120,6 +118,9 @@ public class EventList extends WWidget {
 	}
 	
 	public void deleteSelected(int mouseButton) {
+		if (this.selected == null) {
+			return;
+		}
 		int index = this.listView.getIndex(this.selected);
 		this.listView.remove(this.selected);
 		ConfiguratorGUI.eventsJSON.remove(this.selected.text);
@@ -144,17 +145,17 @@ public class EventList extends WWidget {
 		this.selected = newElement;
 	}
 	
-	public void setOnEventSelectedAction(Consumer<JSONKeyValuePair> onEventSelectedAction) {
+	public void setOnEventSelectedAction(Consumer<JSONObject> onEventSelectedAction) {
 		this.selectedCallback = onEventSelectedAction;
 	}
 	
 	protected void eventSelected(WListElement<JSONKeyValuePair> selectedElement) {
 		this.selected = selectedElement;
 		this.nameField.setText(this.selected.item.getKey());
-		this.onEventSelected(selectedElement.item);
+		this.onEventSelected(selectedElement.item.getJSONObject());
 	}
 
-	public void onEventSelected(JSONKeyValuePair selectedElement) {
+	public void onEventSelected(JSONObject selectedElement) {
 		if (this.selectedCallback != null) {
 			this.selectedCallback.accept(selectedElement);
 		}

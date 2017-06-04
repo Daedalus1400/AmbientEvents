@@ -29,10 +29,10 @@ public class WListView<T> extends WWidget {
 	@Override
 	public void setSize(int widthIn, int heightIn) {
 		super.setSize(widthIn, heightIn);
-		this.scrollBar.setSize(this.scrollBarWidth, heightIn);
 		this.scrollBar.move(this.width - this.scrollBarWidth, 0);
 		this.displayRange = this.height / this.fontRendererObj.FONT_HEIGHT;
 		this.scrollBar.setDisplayRange(this.displayRange);
+		this.scrollBar.setSize(this.scrollBarWidth, heightIn);
 		if (this.selected > -1) {
 			this.scrollBar.goTo(this.selected + this.location);
 		}
@@ -79,7 +79,7 @@ public class WListView<T> extends WWidget {
 
 		int localSelected = this.getElementUnderMouse(mouseX, mouseY);
 
-		if (localSelected < 0 || localSelected > this.count) {
+		if (localSelected < 0 || localSelected >= this.count) {
 			return;
 		}
 
@@ -124,6 +124,11 @@ public class WListView<T> extends WWidget {
 			this.scrollBar.goTo(index);
 		}
 		
+		if (index > this.count || index < 0) {
+			this.selected = -1;
+			return;
+		}
+		
 		this.selected = index - this.location;
 		
 		if (this.callback != null) {
@@ -135,6 +140,10 @@ public class WListView<T> extends WWidget {
 		int index = this.elements.indexOf(element);
 		
 		this.select(index);
+	}
+	
+	public void deselect() {
+		this.select(-1);
 	}
 
 	public int getElementUnderMouse(int mouseX, int mouseY) {
@@ -198,6 +207,12 @@ public class WListView<T> extends WWidget {
 	
 	public void remove(WListElement<T> element) {
 		this.elements.remove(element);
+		this.recount();
+	}
+	
+	public void clear() {
+		this.elements.clear();
+		this.deselect();
 		this.recount();
 	}
 

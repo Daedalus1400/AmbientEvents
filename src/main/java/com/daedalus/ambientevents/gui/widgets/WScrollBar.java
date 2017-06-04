@@ -36,6 +36,9 @@ public class WScrollBar extends WWidget {
 	@Override
 	public void setSize(int widthIn, int heightIn) {
 		super.setSize(widthIn, heightIn);
+		if (this.displayRange < 0) {
+			return;
+		}
 		if (this.displayCount <= this.displayRange) {
 			this.barHeight = heightIn;
 			this.barWidth = widthIn;

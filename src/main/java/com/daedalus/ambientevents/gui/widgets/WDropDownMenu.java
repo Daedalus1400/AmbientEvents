@@ -41,6 +41,10 @@ public class WDropDownMenu <T> extends WWidget {
 		if (this.selected == null) {
 			this.onElementSelected(this.menu.elements.get(0));
 		}
+		
+		if (this.menu.isVisible() && !this.hasFocus) {
+			this.toggleMenu(0);
+		}
 		this.drawRect(0, 0, this.width, this.displayHeight, this.palette.trim);
 		this.drawRect(1, 1, this.width-1, this.displayHeight-1, this.palette.secondary);
 		this.fontRendererObj.drawString(this.selected.text, 2, 2, this.palette.text);
