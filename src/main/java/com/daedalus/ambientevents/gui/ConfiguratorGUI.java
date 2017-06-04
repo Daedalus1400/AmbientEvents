@@ -19,11 +19,12 @@ import net.minecraft.util.ResourceLocation;
 
 public class ConfiguratorGUI extends WWidget {
 
-	protected static JSONObject eventsJSON;
-	protected static JSONObject manifestJSON;
+	public static JSONObject eventsJSON;
+	public static JSONObject manifestJSON;
 	protected final static String manifestPath = "/assets/ambientevents/manifest.json";
 
 	protected WPushButton exit;
+	protected EventList eventList;
 	
 	protected boolean firstStart = true;
 
@@ -40,7 +41,7 @@ public class ConfiguratorGUI extends WWidget {
 			} catch (IOException e) {
 				AmbientEvents.logger.log(Level.ERROR, e);
 			}
-			manifestJSON = new JSONObject(b);
+			manifestJSON = new JSONObject(new String(b));
 		}
 	}
 
@@ -59,6 +60,7 @@ public class ConfiguratorGUI extends WWidget {
 		if (this.firstStart) {
 			this.palette = new Palette();
 			this.exit = new WPushButton(this, "Exit");
+			this.eventList = new EventList(this, this.eventsJSON);
 		}
 		
 		// Start Widget Testing Code
@@ -66,6 +68,8 @@ public class ConfiguratorGUI extends WWidget {
 		
 		
 		// End Widget Testing Code
+		
+		this.eventList.setSize(this.width/2, this.height/2);
 		
 		this.exit.setSize(50, 20);
 		this.exit.move(this.width / 2 - 25, this.height - 20);

@@ -4,6 +4,10 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.Level;
+
+import com.daedalus.ambientevents.AmbientEvents;
+
 import net.minecraft.client.gui.GuiTextField;
 
 public class WVanillaTextField extends WWidget {
@@ -88,5 +92,9 @@ public class WVanillaTextField extends WWidget {
 
 	public String getText() {
 		return this.textField.getText();
+	}
+	
+	public void setText(String textIn) {
+		this.textField.setText(textIn);
 	}
 }

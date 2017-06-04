@@ -53,7 +53,7 @@ public class WWidget extends GuiScreen {
 				this.subWidgets.get(i).onMouseClick(mouseX - this.subWidgets.get(i).offsetX,
 						mouseY - this.subWidgets.get(i).offsetY, mouseButton);
 
-				if (this.focus != null) {
+				if (this.focus != null && !this.focus.equals(this.subWidgets.get(i))) {
 					this.focus.setUnfocused();
 				}
 				this.focus = this.subWidgets.get(i);

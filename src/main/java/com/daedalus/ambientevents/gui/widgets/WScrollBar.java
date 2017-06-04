@@ -90,7 +90,7 @@ public class WScrollBar extends WWidget {
 		}
 
 		if (this.callback != null) {
-			this.callback.accept(constrain(index, 0, this.steps).intValue());
+			this.callback.accept(this.location);
 		}
 	}
 

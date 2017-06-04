@@ -43,10 +43,10 @@ public class WListView<T> extends WWidget {
 		if (this.visible) {
 			this.drawRect(0, 0, this.width, this.height, this.palette.primary);
 			super.draw(mouseX, mouseY, partialTicks);
-			if (this.elements.size() < this.location + this.displayRange) {
-				this.scrollBar.goTo(this.displayRange - this.elements.size());
+			if (this.count < this.location + this.displayRange) {
+				this.scrollBar.goTo(this.count - this.displayRange);
 			}
-			int drawnElements = this.displayRange > this.elements.size() ? this.elements.size() : this.displayRange;
+			int drawnElements = this.displayRange > this.count ? this.count : this.displayRange;
 			int elementUnderMouse = this.getElementUnderMouse(mouseX, mouseY);
 			for (int i = 0; i < drawnElements; i++) {
 				int textColor;
@@ -79,7 +79,7 @@ public class WListView<T> extends WWidget {
 
 		int localSelected = this.getElementUnderMouse(mouseX, mouseY);
 
-		if (localSelected < 0) {
+		if (localSelected < 0 || localSelected > this.count) {
 			return;
 		}
 
@@ -90,9 +90,51 @@ public class WListView<T> extends WWidget {
 			return;
 		}
 
-		if (this.callback != null) {
-			this.callback.accept(this.elements.get(elementID));
+		this.select(this.elements.get(elementID));
+	}
+	
+	public boolean contains(WListElement<T> element) {
+		return this.elements.contains(element);
+	}
+	
+	public boolean contains(String elementName) {
+		for (WListElement<T> element : elements) {
+			if (element.text.equals(elementName)) {
+				return true;
+			}
 		}
+		return false;
+	}
+	
+	public int getIndex(WListElement<T> element) {
+		return this.elements.indexOf(element);
+	}
+	
+	public int getIndex(String elementName) {
+		for (int i = 0; i < this.elements.size(); i++) {
+			if (this.elements.get(i).text.equals(elementName)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public void select(int index) {
+		if (index < this.location || index > this.location + this.displayRange) {
+			this.scrollBar.goTo(index);
+		}
+		
+		this.selected = index - this.location;
+		
+		if (this.callback != null) {
+			this.callback.accept(this.elements.get(index));
+		}
+	}
+	
+	public void select(WListElement<T> element) {
+		int index = this.elements.indexOf(element);
+		
+		this.select(index);
 	}
 
 	public int getElementUnderMouse(int mouseX, int mouseY) {
@@ -100,7 +142,7 @@ public class WListView<T> extends WWidget {
 			return -1;
 		}
 		for (int i = 0; i < this.displayRange; i++) {
-			if (mouseY > i * this.fontRendererObj.FONT_HEIGHT + 2
+			if (mouseY >= i * this.fontRendererObj.FONT_HEIGHT + 2
 					&& mouseY <= (i + 1) * this.fontRendererObj.FONT_HEIGHT) {
 				return i;
 			}
@@ -124,6 +166,14 @@ public class WListView<T> extends WWidget {
 		}
 		this.recount();
 	}
+	
+	public int getSize() {
+		return this.elements.size();
+	}
+	
+	public void add(WListElement<T> element, int index) {
+		this.elements.add(index, element);
+	}
 
 	public void add(WListElement<T> elementIn) {
 		this.elements.add(elementIn);
@@ -141,13 +191,23 @@ public class WListView<T> extends WWidget {
 		}
 		this.recount();
 	}
+	
+	public WListElement<T> get(int index) {
+		return this.elements.get(index);
+	}
+	
+	public void remove(WListElement<T> element) {
+		this.elements.remove(element);
+		this.recount();
+	}
 
 	protected void recount() {
 		this.count = this.elements.size();
 		this.scrollBar.setDisplayCount(this.count);
 	}
 
-	protected void scrollTo(int index) {
+	public void scrollTo(int index) {
+		index = constrain(index, 0, this.count < this.displayRange? 0 : this.count - this.displayRange).intValue();
 		this.selected += this.location - index;
 		this.location = index;
 	}
