@@ -2,6 +2,7 @@ package com.daedalus.ambientevents.handlers;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -47,7 +48,9 @@ public class ClientEventHandler extends CommonEventHandler {
 		JSONPath = new File(configPath.getPath() + "/AmbientEvents");
 		JSONFile = new File(JSONPath.getPath() + "/events.json");
 
-		if (!JSONPath.exists()) {
+		eventsJSON = new JSONObject();
+		
+		if (!JSONFile.exists()) {
 			try {
 				JSONPath.mkdirs();
 				JSONFile.createNewFile();
