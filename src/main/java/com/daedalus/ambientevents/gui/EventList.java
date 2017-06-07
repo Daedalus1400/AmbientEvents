@@ -19,6 +19,7 @@ public class EventList extends WWidget {
 	protected WListView<JSONKeyValuePair> listView;
 	protected WVanillaTextField nameField;
 	protected WPushButton newButton;
+	protected WPushButton duplicateButton;
 	protected WPushButton deleteButton;
 	
 	protected WListElement<JSONKeyValuePair> selected;
@@ -41,6 +42,9 @@ public class EventList extends WWidget {
 		this.newButton = new WPushButton(this, "New");
 		this.newButton.setOnClickAction(this::newEvent);
 		
+		this.duplicateButton = new WPushButton(this, "Duplicate");
+		this.duplicateButton.setOnClickAction(this::duplicateEvent);
+		
 		this.deleteButton = new WPushButton(this, "Delete");
 		this.deleteButton.setOnClickAction(this::deleteSelected);
 		Iterator<String> events = ConfiguratorGUI.eventsJSON.keys();
@@ -61,11 +65,14 @@ public class EventList extends WWidget {
 		this.nameField.setSize(widthIn - this.padding * 3, textHeight);
 		this.nameField.move(this.padding + 1, this.padding + 1);
 		
-		this.newButton.setSize((this.width - this.padding * 2) / 2, textHeight);
+		this.newButton.setSize((this.width - this.padding * 2) / 3, textHeight);
 		this.newButton.move(this.padding, this.padding * 2 + textHeight);
 		
-		this.deleteButton.setSize(sizeX - this.newButton.width, this.newButton.height);
-		this.deleteButton.move(this.newButton.width + this.newButton.offsetX, this.newButton.offsetY);
+		this.duplicateButton.setSize(this.newButton.width, this.newButton.height);
+		this.duplicateButton.move(this.newButton.width +  this.newButton.offsetX, this.newButton.offsetY);
+		
+		this.deleteButton.setSize(sizeX - 2 *this.newButton.width, this.newButton.height);
+		this.deleteButton.move(this.duplicateButton.width + this.duplicateButton.offsetX, this.newButton.offsetY);
 		
 		this.listView.setSize(this.width - this.padding * 2, heightIn - this.newButton.height - this.newButton.offsetY - this.padding);
 		this.listView.move(this.padding, textHeight * 2 + this.padding * 2);

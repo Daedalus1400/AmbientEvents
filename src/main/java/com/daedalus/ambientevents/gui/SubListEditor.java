@@ -14,6 +14,7 @@ public class SubListEditor extends WWidget {
 	protected Consumer<JSONKeyValuePair> selectedCallback;
 
 	protected WPushButton newButton;
+	protected WPushButton duplicateButton;
 	protected WPushButton deleteButton;
 	protected WDropDownMenu<String> dropMenu;
 	
@@ -34,6 +35,9 @@ public class SubListEditor extends WWidget {
 		
 		this.newButton = new WPushButton(this, "New");
 		this.newButton.setOnClickAction(this::newElement);
+		
+		this.duplicateButton = new WPushButton(this, "Duplicate");
+		this.duplicateButton.setOnClickAction(this::duplicateElement);
 		
 		this.deleteButton = new WPushButton(this, "Delete");
 		this.deleteButton.setOnClickAction(this::deleteSelected);
@@ -58,11 +62,14 @@ public class SubListEditor extends WWidget {
 		
 		int sizeX = this.width - this.padding;
 		
-		this.newButton.setSize((this.width - this.padding) / 2, textHeight);
+		this.newButton.setSize((this.width - this.padding) / 3, textHeight);
 		this.newButton.move(this.padding, 0);
 		
-		this.deleteButton.setSize(sizeX - this.newButton.width, this.newButton.height);
-		this.deleteButton.move(this.newButton.width + this.newButton.offsetX, this.newButton.offsetY);
+		this.duplicateButton.setSize(this.newButton.width, this.newButton.height);
+		this.duplicateButton.move(this.newButton.width +  this.newButton.offsetX, this.newButton.offsetY);
+		
+		this.deleteButton.setSize(sizeX - 2 * this.newButton.width, this.newButton.height);
+		this.deleteButton.move(this.duplicateButton.width + this.duplicateButton.offsetX, this.newButton.offsetY);
 		
 		this.dropMenu.setSize(sizeX - this.listView.scrollBarWidth, textHeight);
 		this.dropMenu.move(this.padding, this.newButton.height);

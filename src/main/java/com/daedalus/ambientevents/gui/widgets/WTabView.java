@@ -36,6 +36,12 @@ public class WTabView extends WWidget {
 		}
 	}
 	
+	public void clear() {
+		this.labels.clear();
+		this.widgets.clear();
+		this.subWidgets.clear();
+	}
+	
 	public void onTabSwitch(int tabID) {
 		for(int i = 0; i < this.widgets.size(); i++) {
 			if (i == tabID) {

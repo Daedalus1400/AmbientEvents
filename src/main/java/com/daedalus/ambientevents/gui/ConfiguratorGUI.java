@@ -26,6 +26,7 @@ public class ConfiguratorGUI extends WWidget {
 	protected WPushButton exit;
 	protected EventList eventList;
 	protected SubLists subLists;
+	protected ValueTabs valueTabs;
 	
 	protected boolean firstStart = true;
 	
@@ -61,11 +62,14 @@ public class ConfiguratorGUI extends WWidget {
 	public void initGui() {
 		super.initGui();
 
+		int exitHeight = 12;
+		
 		if (this.firstStart) {
 			this.palette = new Palette();
 			this.exit = new WPushButton(this, "Exit");
 			this.eventList = new EventList(this);
 			this.subLists = new SubLists(this);
+			this.valueTabs = new ValueTabs(this);
 		}
 		
 		this.eventList.setSize(this.width/2, this.height/2);
@@ -74,9 +78,12 @@ public class ConfiguratorGUI extends WWidget {
 		this.subLists.setSize(this.width/2, this.height/2);
 		this.subLists.move(this.width/2, 0);
 		
-		this.exit.setSize(50, 20);
-		this.exit.move(this.width / 2 - 25, this.height - 20);
+		this.exit.setSize(50, exitHeight);
+		this.exit.move(this.width / 2 - 25, this.height - exitHeight);
 		this.exit.setOnClickAction(this::exit);
+		
+		this.valueTabs.setSize(this.width, this.height/2 - exitHeight);
+		this.valueTabs.move(0, this.height/2);
 
 		this.show();
 		
