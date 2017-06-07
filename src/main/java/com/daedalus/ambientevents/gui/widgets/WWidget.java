@@ -1,6 +1,10 @@
 package com.daedalus.ambientevents.gui.widgets;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.daedalus.ambientevents.gui.Palette;
 
@@ -184,5 +188,49 @@ public class WWidget extends GuiScreen {
 		} else {
 			return input;
 		}
+	}
+	
+	public static JSONObject copyJSONObject(JSONObject json) {
+		JSONObject result = new JSONObject();
+		
+		Iterator<String> keys = json.keys();
+		while (keys.hasNext()) {
+			String key = keys.next();
+			Object object = json.get(key);
+			if (object instanceof Integer) {
+				result.put(key, new Integer((int)object));
+			} else if (object instanceof Double) {
+				result.put(key, new Double((double)object));
+			} else if (object instanceof String) {
+				result.put(key, new String((String)object));
+			} else if (object instanceof JSONObject) {
+				result.put(key, copyJSONObject((JSONObject)object));
+			} else if (object instanceof JSONArray) {
+				result.put(key, copyJSONArray((JSONArray)object));
+			}
+		}
+		
+		return result;
+	}
+	
+	public static JSONArray copyJSONArray(JSONArray array) {
+		JSONArray result = new JSONArray();
+		
+		for (int i = 0; i < array.length(); i++) {
+			Object object = array.get(i);
+			if (object instanceof Integer) {
+				result.put(new Integer((int)object));
+			} else if (object instanceof Double) {
+				result.put(new Double((double)object));
+			} else if (object instanceof String) {
+				result.put(new String((String)object));
+			} else if (object instanceof JSONObject) {
+				result.put(copyJSONObject((JSONObject)object));
+			} else if (object instanceof JSONArray) {
+				result.put(copyJSONArray((JSONArray)object));
+			}
+		}
+		
+		return result;
 	}
 }

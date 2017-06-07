@@ -94,6 +94,19 @@ public class SubListEditor extends WWidget {
 		this.listView.add(new WListElement(this.dropMenu.getSelected().text, newJSON));
 	}
 	
+	public void duplicateElement(int mouseButton) {
+		if (this.selected == null) {
+			return;
+		}
+		
+		JSONObject newJSON = copyJSONObject(this.selected.item);
+		
+		array.put(newJSON);
+		WListElement<JSONObject> newElement = new WListElement<JSONObject> (newJSON.getString("type"), newJSON);
+
+		this.listView.add(newElement);
+	}
+	
 	public void deleteSelected(int mouseButton) {
 		if (this.selected == null) {
 			return;

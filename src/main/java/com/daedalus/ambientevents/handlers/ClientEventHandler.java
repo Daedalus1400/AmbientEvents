@@ -84,29 +84,7 @@ public class ClientEventHandler extends CommonEventHandler {
 	}
 	
 	public void refreshJSON() {
-		this.configGood = false;
 		
-		try {
-			eventsJSON = new JSONObject(eventsJSON.toString());
-		} catch (Exception e) {
-			AmbientEvents.logger.log(Level.ERROR, "Cannot parse JSON file");
-			return;
-		}
-
-		this.events = new ArrayList<GenericEvent>();
-
-		Iterator<String> eventIt = eventsJSON.keys();
-
-		while (eventIt.hasNext()) {
-			String eventName = eventIt.next();
-			try {
-				this.events.add(new GenericEvent(eventsJSON.getJSONObject(eventName)));
-			} catch (Exception e) {
-				AmbientEvents.logger.log(Level.ERROR, "Error parsing event: " + eventName, e);
-			}
-		}
-
-		this.configGood = true;
 	}
 
 	@SubscribeEvent

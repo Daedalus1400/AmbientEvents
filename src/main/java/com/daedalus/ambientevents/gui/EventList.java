@@ -101,6 +101,17 @@ public class EventList extends WWidget {
 		this.listView.add(new WListElement<JSONKeyValuePair> (newName, new JSONKeyValuePair(newName, newEvent)));
 	}
 	
+	public void duplicateEvent(int mouseButton) {
+		if (this.selected == null) {
+			return;
+		}
+		String newName = String.format(this.selected.text + "%d", eventCounter++);
+		JSONKeyValuePair newPair = new JSONKeyValuePair(newName, copyJSONObject(this.selected.item.getJSONObject()));
+		WListElement<JSONKeyValuePair> newElement = new WListElement<JSONKeyValuePair> (newName, newPair);
+		ConfiguratorGUI.eventsJSON.put(newName, newElement.item.getJSONObject());
+		this.listView.add(newElement);
+	}
+	
 	public void deleteSelected(int mouseButton) {
 		if (this.selected == null) {
 			return;
