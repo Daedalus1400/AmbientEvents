@@ -77,6 +77,7 @@ public class ConfiguratorGUI extends WWidget {
 		
 		this.subLists.setSize(this.width/2, this.height/2);
 		this.subLists.move(this.width/2, 0);
+		this.subLists.setOnElementSelectedAction(this.valueTabs::populate);
 		
 		this.exit.setSize(50, exitHeight);
 		this.exit.move(this.width / 2 - 25, this.height - exitHeight);

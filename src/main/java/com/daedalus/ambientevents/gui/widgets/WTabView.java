@@ -11,6 +11,7 @@ public class WTabView extends WWidget {
 	protected Consumer<String> callback;
 	
 	protected int border = 2;
+	protected int selected;
 	
 	public WTabView(WWidget parentIn) {
 		super(parentIn);
@@ -43,6 +44,7 @@ public class WTabView extends WWidget {
 	}
 	
 	public void onTabSwitch(int tabID) {
+		this.selected = tabID;
 		for(int i = 0; i < this.widgets.size(); i++) {
 			if (i == tabID) {
 				this.widgets.get(i).show();
@@ -50,6 +52,10 @@ public class WTabView extends WWidget {
 				this.widgets.get(i).hide();
 				this.labels.get(i).deselect();
 			}
+		}
+		
+		if (this.callback != null) {
+			this.callback.accept(this.labels.get(this.selected).label);
 		}
 	}
 	
@@ -67,12 +73,12 @@ public class WTabView extends WWidget {
 		for (WTabLabel label : labels) {
 			label.show();
 		}
-		this.onTabSwitch(0);
+		this.onTabSwitch(this.selected);
 	}
 	
 	@Override
 	public void draw(int mouseX, int mouseY, float partialTicks) {
-		if (this.visible && this.labels.size() > 1) {
+		if (this.visible && this.labels.size() > 0) {
 			this.drawRect(0, this.labels.get(0).height, this.width, this.height, this.palette.edging);
 			super.draw(mouseX, mouseY, partialTicks);
 		}

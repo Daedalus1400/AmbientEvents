@@ -44,6 +44,9 @@ public class WTabLabel extends WAbstractButton {
 
 	@Override
 	public void onMouseClick(int mouseX, int mouseY, int mouseButton) {
+		if (this.selected) {
+			return;
+		}
 		this.mc.world.playSound(this.mc.player.posX, this.mc.player.posY, this.mc.player.posZ,
 				PlaySoundAction.registry.get("ui.button.click"), SoundCategory.MASTER, 0.3f, 1.0f, true);
 		this.select();
