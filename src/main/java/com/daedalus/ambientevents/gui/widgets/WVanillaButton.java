@@ -40,7 +40,7 @@ public class WVanillaButton extends WAbstractButton {
 	public void draw(int mouseX, int mouseY, float partialTicks) {
 		if (this.visible) {
 			super.draw(mouseX, mouseY, partialTicks);
-			this.button.drawButtonForegroundLayer(mouseX, mouseY);
+			this.button.func_191745_a(this.mc, mouseX, mouseY, partialTicks);
 		}
 	}
 }
